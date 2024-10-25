@@ -1,0 +1,71 @@
+Koncepcje do Podcastly:
+
+Skoro pliki są przechowywane w dwóch dokumentach: metadane i chunki,
+aby dodać własne opisy i cechy dla podcastu/posta trzeba wprowadzić trzeci dokument który przechowuje ID metadanych
+
+Customowy dokument--->Metadane--->Chunki
+
+Możliwe, że jednym z rozwiązań będzie:
+1. Korzystamy z DTO (PostFileEntityDTO), które zawiera dane posta i plik podcastu razem), aby otrzymać dane do posta i plik podcastu
+2. W Service decomposujemy DTO, oddzielamy informacje do posta od pliku
+3. Plik zapisujemy w repozytorium obsługującym Pliki (w zależności jak GridFS to obsługuje), uzyskujemy ObjectID po zapisie,
+4. Dane do posta otrzymują Metadane ID i są zapisywane w repozytorium obsługującym nasz customowy dokument
+Customowy dokument w MongoDB powinien przechowywać:
+"Post"
+{
+id_posta,
+tytuł,
+opis,
+miejsce,
+data_dodania,
+jakieś_zapychacze,
+id_do_metadane_pliku
+}
+
+W takim razie klasa PostData(){
+id_posta,
+createdAt timestamp,
+modifiedAt timestamp,
+tytuł,
+opis,
+miejsce,
+data_dodania
+jakieś zapychacze
+}
+
+
+
+
+
+Ewentualna klasa do pliku to po prostu będzie MultiplePartFile/klasa dziedzicząca z MultiplePartFile LUB dedykowany kontener od GridFS
+
+Endpointy:
+
+GET /listall - wypisuje tytuł posta, data dodania i ID na dokument Posta (koniecznie tylko to pobierać z chmury aby oszczędzać zasoby)
+ResponseDTO(){
+ID_posta
+tytuł_podcastu,
+data_dodania
+}
+
+GET /post/id_posta - zwraca cały post wraz z plikiem (trzeba z bazki pobrać dokument posta, za jego pomocą pobrać metadane i jakoś to grid sklei w plik)
+ResponseDTO(){
+dane_do_klasy_PostData (okrojone z metadanych samego posta typu added_timestamp, modified_timestamp itd)
+Plik
+}
+
+POST /post -zapisuje post wraz z plikiem, operuje na PostFileEntity (post+plik)
+PostFileEntityRequestDTO(){
+dane_do_klasy_Post,
+Plik
+}
+
+PUT /post/id_posta - może być bardziej zaawansowane jeśli chodzi o update pliku, zbada się później
+
+DELETE /post/id_posta -ma usunąć konkretny post
+
+
+
+
+
+

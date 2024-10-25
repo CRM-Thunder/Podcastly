@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/rest/podcasts")
-public class FileUploadEntityController {
+public class PostFileEntityController {
 
-    private final FileUploadEntityService fileUploadEntityService;
+    private final PostFileEntityService postFileEntityService;
 
 
 

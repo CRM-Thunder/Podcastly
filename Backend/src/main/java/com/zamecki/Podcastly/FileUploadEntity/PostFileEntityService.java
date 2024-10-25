@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class FileUploadEntityService {
+public class PostFileEntityService {
 }
