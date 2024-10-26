@@ -29,7 +29,6 @@ modifiedAt timestamp,
 tytuł,
 opis,
 miejsce,
-data_dodania
 jakieś zapychacze
 }
 
