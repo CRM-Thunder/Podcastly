@@ -4,7 +4,9 @@ import com.zamecki.Podcastly.CustomContainers.CustomDate;
 import lombok.Builder;
 import lombok.Data;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
+//W obiekcie tej klasy zwracane są dane dla endpointa listAll
 
 @Data
 @Builder
@@ -12,5 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ListAllResponseDTO {
     private ObjectId id;
     private String podcast_title;
-    private CustomDate createdAt;
+    private CustomDate created_at;
+    private String category;
+    private List<String> tags;
 }

@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.List;
+
+//Jest to klasa pracująca z kolekcją PostData, jest ona bezpośrednio zapisywana i odczytywana z bazy
 
 @Document("PostData")
 @Data
@@ -17,10 +20,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class PostFileEntity {
     @Id
     private ObjectId id;
-    private CustomDate createdAt;
-    private CustomDate modifiedAt;
+    private CustomDate created_at;
+    private CustomDate modified_at;
     private String description;
-    private String place;
-    //albo file_id albo sam plik, zobaczymy jaka architektura mi wyjdzie
-    //private ObjectId file_id;
+    private String title;
+    private String category;
+    private List <String> tags;
+    private ObjectId movie_id;
 }
