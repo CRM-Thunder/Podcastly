@@ -8,5 +8,9 @@ import java.util.List;
 
 @Getter
 @RequiredArgsConstructor
-public record AddPostRequestDTO(String title, String description, String category, List<String> tags) {
+public class AddPostRequestDTO{
+    final String title;
+    final String description;
+    final String category;
+    final List<String> tags;
 }

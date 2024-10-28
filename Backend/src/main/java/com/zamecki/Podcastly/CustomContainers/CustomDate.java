@@ -1,15 +1,12 @@
 package com.zamecki.Podcastly.CustomContainers;
 
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-@Builder
+@Data
 @Getter
-@Setter
 public class CustomDate {
     final private String dateTime;
 
