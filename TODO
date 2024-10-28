@@ -5,11 +5,11 @@ aby dodać własne opisy i cechy dla podcastu/posta trzeba wprowadzić trzeci do
 
 Customowy dokument--->Metadane--->Chunki
 
-Możliwe, że jednym z rozwiązań będzie:
-1. Korzystamy z DTO (PostFileEntityDTO), które zawiera dane posta i plik podcastu razem), aby otrzymać dane do posta i plik podcastu
-2. W Service decomposujemy DTO, oddzielamy informacje do posta od pliku
+Najtrudniejszy post+file upload
+1. Kontroler odbiera osobno RequestDTO oraz Plik, przekazuje do serwisu
+2. W Serwisie mamy dostęp do repozytorium postów i repozytorium plikowego
 3. Plik zapisujemy w repozytorium obsługującym Pliki (w zależności jak GridFS to obsługuje), uzyskujemy ObjectID po zapisie,
-4. Dane do posta otrzymują Metadane ID i są zapisywane w repozytorium obsługującym nasz customowy dokument
+4. Dane do posta otrzymują Metadane ID i są zapisywane w repozytorium obsługującym nasz postowy dokument
 Customowy dokument w MongoDB powinien przechowywać:
 "Post"
 {
@@ -18,7 +18,8 @@ tytuł,
 opis,
 miejsce,
 data_dodania,
-jakieś_zapychacze,
+kategoria
+tagi
 id_do_metadane_pliku
 }
 
@@ -28,8 +29,8 @@ createdAt timestamp,
 modifiedAt timestamp,
 tytuł,
 opis,
-miejsce,
-jakieś zapychacze
+kategoria,
+tagi
 }
 
 
