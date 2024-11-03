@@ -16,6 +16,7 @@ public class findPostByIdResponseDTO {
     private ObjectId id;
     private CustomDate created_at;
     private CustomDate modified_at;
+    private String title;
     private String description;
     private String category;
     private List<String> tags;

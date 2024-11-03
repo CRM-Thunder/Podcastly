@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ListAllResponseDTO {
     private ObjectId id;
-    private String podcast_title;
+    private String title;
     private CustomDate created_at;
     private String category;
     private List<String> tags;
