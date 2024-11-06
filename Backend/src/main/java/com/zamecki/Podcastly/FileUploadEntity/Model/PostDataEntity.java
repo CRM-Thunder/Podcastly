@@ -17,7 +17,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostFileEntity {
+public class PostDataEntity {
     @Id
     private ObjectId id;
     private CustomDate created_at;
@@ -26,5 +26,5 @@ public class PostFileEntity {
     private String title;
     private String category;
     private List <String> tags;
-    private ObjectId movie_id;
+    private ObjectId file_id;
 }

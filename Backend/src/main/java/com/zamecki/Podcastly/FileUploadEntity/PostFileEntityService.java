@@ -1,6 +1,8 @@
 package com.zamecki.Podcastly.FileUploadEntity;
 
 import com.zamecki.Podcastly.FileUploadEntity.DTOs.*;
+import com.zamecki.Podcastly.FileUploadEntity.Model.PostDataEntity;
+import com.zamecki.Podcastly.FileUploadEntity.Repositories.PostDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
@@ -15,11 +17,19 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PostFileEntityService {
-    //trzeba ogarnąc repozytoria do GridFS oraz klasycznej kolekcji PostData
+    //trzeba ogarnąc repozytoria do GridFS
+    PostDataRepository postDataRepository;
 
     public ResponseEntity<List<ListAllResponseDTO>>listAllPosts(){
-        //wyciąganie z bazy
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<PostDataEntity> dbPostDataEntityList=postDataRepository.findAll();
+        List<ListAllResponseDTO> listAllResponseDTOList=dbPostDataEntityList.stream().map(DTOConverter::ListAllToDtoConv).toList();
+        if(!listAllResponseDTOList.isEmpty()) {
+            return new ResponseEntity<>(listAllResponseDTOList,HttpStatus.OK);
+        }
+        else{
+            //wyjątek rzucimy potem jak dodam obsługę xD
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     public ResponseEntity<findPostByIdResponseDTO> findPostById(ObjectId id){
         //wyciaganie z bazy
@@ -27,6 +37,8 @@ public class PostFileEntityService {
     }
     public ResponseEntity<AddPostResponseDTO> addPost(AddPostRequestDTO addPostRequestDTO, MultipartFile file){
         //zapis do bazy pliku, pobranie objectID, zapisanie danych posta z id pliku
+        //będzie jakaś weryfikacja czy dane są prawidłowe ale to na poziomie requestdto chyba
+        //należy zbudować cały PostData z tego request dto
         return new ResponseEntity<>(HttpStatus.OK);
     }
     public ResponseEntity<AddPostResponseDTO> updatePost(UpdatePostRequestDTO updatePostRequestDTO, MultipartFile file){
