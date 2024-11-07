@@ -18,7 +18,7 @@ public interface PostDataRepository extends MongoRepository<PostDataEntity, Obje
     @Query(value = "{}", fields = "{ 'modified_at': 0, 'description' : 0, 'file_id' : 0}")
     List<PostDataEntity> findAll();
     @NotNull
-    Optional<PostDataEntity> findById(@NotNull ObjectId id);
-    void deleteById(@NotNull ObjectId id);
+    Optional<PostDataEntity> findById(@NotNull String id);
+    void deleteById(@NotNull String id);
 
 }
