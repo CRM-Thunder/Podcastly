@@ -9,7 +9,7 @@ import java.util.List;
 @RequiredArgsConstructor
 
 public class UpdatePostRequestDTO {
-        final ObjectId id;
+        final String id;
         final String title;
         final String description;
         final String category;

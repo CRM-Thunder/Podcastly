@@ -12,9 +12,9 @@ import java.util.List;
 @Builder
 
 public class ListAllResponseDTO {
-    private ObjectId id;
+    private String id;
     private String title;
-    private CustomDate created_at;
+    private String created_at;
     private String category;
     private List<String> tags;
 }

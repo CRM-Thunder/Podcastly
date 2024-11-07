@@ -20,10 +20,10 @@ import java.util.List;
 public class PostDataEntity {
     @Id
     private ObjectId id;
-    private CustomDate created_at;
-    private CustomDate modified_at;
-    private String description;
+    private String created_at;
+    private String modified_at;
     private String title;
+    private String description;
     private String category;
     private List <String> tags;
     private ObjectId file_id;

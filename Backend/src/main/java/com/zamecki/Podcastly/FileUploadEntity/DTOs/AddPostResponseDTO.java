@@ -10,5 +10,5 @@ import org.bson.types.ObjectId;
 @Builder
 public class AddPostResponseDTO {
     private String message;
-    private ObjectId id;
+    private String id;
 }

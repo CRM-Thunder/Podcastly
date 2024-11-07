@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class DTOConverter {
 
     public static ListAllResponseDTO ListAllToDtoConv(@NotNull PostDataEntity postDataEntity){
-        return ListAllResponseDTO.builder().id(postDataEntity.getId()).title(postDataEntity.getTitle()).created_at(postDataEntity.getCreated_at()).category(postDataEntity.getCategory()).tags(postDataEntity.getTags()).build();
+        return ListAllResponseDTO.builder().id(postDataEntity.getId().toString()).title(postDataEntity.getTitle()).created_at(postDataEntity.getCreated_at()).category(postDataEntity.getCategory()).tags(postDataEntity.getTags()).build();
     }
 
 }

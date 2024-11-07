@@ -5,10 +5,13 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-@Data
+
 @Getter
+@Setter
+//TODO: należy zdefiniować samemu konstruktor, walidować format ustawianego datetime
+@AllArgsConstructor
 public class CustomDate {
-    final private String dateTime;
+    private String dateTime;
 
     public CustomDate(){
         LocalDateTime currDateObj = LocalDateTime.now();

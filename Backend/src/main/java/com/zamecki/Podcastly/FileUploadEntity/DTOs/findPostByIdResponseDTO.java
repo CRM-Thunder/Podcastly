@@ -13,9 +13,9 @@ import java.util.List;
 @Builder
 
 public class findPostByIdResponseDTO {
-    private ObjectId id;
-    private CustomDate created_at;
-    private CustomDate modified_at;
+    private String id;
+    private String created_at;
+    private String modified_at;
     private String title;
     private String description;
     private String category;

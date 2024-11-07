@@ -3,11 +3,15 @@ package com.zamecki.Podcastly.FileUploadEntity;
 import com.zamecki.Podcastly.FileUploadEntity.DTOs.*;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 //Kontroler obsługujący requesty
@@ -24,19 +28,20 @@ public class PostFileEntityController {
         return postFileEntityService.listAllPosts();
     }
     @GetMapping("/find/{id}")
-    public ResponseEntity<findPostByIdResponseDTO> findPostById(@PathVariable ObjectId id){
+    public ResponseEntity<findPostByIdResponseDTO> findPostById(@PathVariable String id){
         return postFileEntityService.findPostById(id);
     }
     @PostMapping("/add")
-    public ResponseEntity<AddPostResponseDTO> addPost(@RequestParam AddPostRequestDTO addPostRequestDTO, @RequestPart (value = "file") MultipartFile file){
+    public ResponseEntity<AddPostResponseDTO> addPost(@NotNull @RequestPart("addPostRequestDTO") AddPostRequestDTO addPostRequestDTO, @RequestPart (value = "file", required = false) MultipartFile file){
+
         return postFileEntityService.addPost(addPostRequestDTO, file);
     }
     @PutMapping("/update")
-    public ResponseEntity<AddPostResponseDTO> updatePost(@RequestParam UpdatePostRequestDTO updatePostRequestDTO, @RequestPart (value = "file") MultipartFile file){
+    public ResponseEntity<AddPostResponseDTO> updatePost(@RequestPart("updatePostRequestDTO") UpdatePostRequestDTO updatePostRequestDTO, @RequestPart (value = "file", required = false) MultipartFile file){
         return postFileEntityService.updatePost(updatePostRequestDTO, file);
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deletePost (@PathVariable ObjectId id){
+    public ResponseEntity<String> deletePost (@PathVariable String id){
         return postFileEntityService.deletePost(id);
     }
 
