@@ -1,0 +1,37 @@
+.search-button {
+    background-color: #a252ff;
+    color: white;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.search-button:hover {
+    background-color: #5a2d87;
+}
+
+.category-button {
+    width: 100%;
+    height: 100%;
+    background-color: #a252ff; /* Kolor tła przycisku */
+    color: #ffffff; /* Kolor tekstu */
+    border: none; /* Bez obramowania */
+    border-radius: 0; /* Brak zaokrągleń, ostre krawędzie */
+    font-size: 20px; /* Rozmiar tekstu */
+    cursor: pointer; /* Zmieniony kursor po najechaniu */
+    transition: background-color 0.3s, transform 0.2s; /* Płynna zmiana koloru i lekki efekt kliknięcia */
+    font-family: Calibri, serif;
+    font-weight: bold;
+}
+
+/* Efekt po najechaniu */
+.category-button:hover {
+    background-color: #5a2d87; /* Ciemniejszy kolor na hover */
+}
+
+
+.article-section {
+    width: 70%;
+    min-height: 100%;
+    margin: 0 auto;
+}
