@@ -1,9 +1,7 @@
 package com.zamecki.Podcastly.FileUploadEntity.DTOs;
 
-import com.zamecki.Podcastly.CustomContainers.CustomDate;
 import lombok.Builder;
 import lombok.Data;
-import org.bson.types.ObjectId;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
@@ -12,7 +10,7 @@ import java.util.List;
 @Data
 @Builder
 
-public class findPostByIdResponseDTO {
+public class FindPostByIdResponseDTO {
     private String id;
     private String created_at;
     private String modified_at;

@@ -2,16 +2,12 @@ package com.zamecki.Podcastly.FileUploadEntity;
 
 import com.zamecki.Podcastly.FileUploadEntity.DTOs.*;
 import lombok.RequiredArgsConstructor;
-import org.bson.types.ObjectId;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 //Kontroler obsługujący requesty
@@ -28,7 +24,7 @@ public class PostFileEntityController {
         return postFileEntityService.listAllPosts();
     }
     @GetMapping("/find/{id}")
-    public ResponseEntity<findPostByIdResponseDTO> findPostById(@PathVariable String id){
+    public ResponseEntity<FindPostByIdResponseDTO> findPostById(@PathVariable String id){
         return postFileEntityService.findPostById(id);
     }
     @PostMapping("/add")
@@ -41,7 +37,7 @@ public class PostFileEntityController {
         return postFileEntityService.updatePost(updatePostRequestDTO, file);
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deletePost (@PathVariable String id){
+    public ResponseEntity<AddPostResponseDTO> deletePost (@PathVariable String id){
         return postFileEntityService.deletePost(id);
     }
 
