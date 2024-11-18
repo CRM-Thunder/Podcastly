@@ -1,6 +1,5 @@
 package com.zamecki.Podcastly.FileUploadEntity.Model;
 
-import com.zamecki.Podcastly.CustomContainers.CustomDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

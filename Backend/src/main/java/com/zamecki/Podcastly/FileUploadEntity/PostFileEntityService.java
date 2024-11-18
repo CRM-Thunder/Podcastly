@@ -7,8 +7,6 @@ import com.zamecki.Podcastly.FileUploadEntity.Repositories.PostDataRepository;
 import com.zamecki.Podcastly.FileUploadEntity.exceptions.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostFileEntityService {
     //trzeba ogarnąc repozytoria do GridFS
-    PostDataRepository postDataRepository;
+    private final PostDataRepository postDataRepository;
 
     public ResponseEntity<List<ListAllResponseDTO>>listAllPosts(){
         List<PostDataEntity> dbPostDataEntityList=postDataRepository.findAll();
