@@ -3,15 +3,17 @@ package com.zamecki.Podcastly.FileUploadEntity;
 import com.zamecki.Podcastly.CustomContainers.CustomDate;
 import com.zamecki.Podcastly.FileUploadEntity.DTOs.*;
 import com.zamecki.Podcastly.FileUploadEntity.Model.PostDataEntity;
-import com.zamecki.Podcastly.FileUploadEntity.Repositories.PostDataRepository;
+import com.zamecki.Podcastly.FileUploadEntity.Repositories.MongoTemplateRepository;
 import com.zamecki.Podcastly.FileUploadEntity.exceptions.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +23,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostFileEntityService {
     //trzeba ogarnąc repozytoria do GridFS
-    private final PostDataRepository postDataRepository;
+    //private final PostDataRepository postDataRepository;
+    private final MongoTemplateRepository postDataRepository;
 
     public ResponseEntity<List<ListAllResponseDTO>>listAllPosts(){
         List<PostDataEntity> dbPostDataEntityList=postDataRepository.findAll();
@@ -34,9 +37,9 @@ public class PostFileEntityService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    public ResponseEntity<FindPostByIdResponseDTO> findPostById(String id) throws PostNotFoundException {
+    public ResponseEntity<FindPostByIdResponseDTO> findPostById(String id){
         //wyciaganie z bazy
-         Optional<PostDataEntity> dbPostDataEntity= Optional.ofNullable(postDataRepository.findById(id).orElseThrow(()->new PostNotFoundException("Post not found!")));
+        @NotNull Optional<PostDataEntity> dbPostDataEntity= Optional.ofNullable(postDataRepository.findById(id));
         FindPostByIdResponseDTO findPostByIdResponseDTO=DTOConverter.FindPostByIdToDtoConv(dbPostDataEntity.get());
         return new ResponseEntity<>(findPostByIdResponseDTO, HttpStatus.OK);
     }
@@ -54,19 +57,19 @@ public class PostFileEntityService {
                 .tags(addPostRequestDTO.getTags())
                 .file_id(ObjectId.get())
                 .build();
-        //walidacja musi być czy zostało zapisane
-        postDataRepository.save(postDataEntity);
+
+        postDataRepository.addPost(postDataEntity);
         return new ResponseEntity<>(AddPostResponseDTO.builder().id(postDataEntity.getId().toString()).message("New podcast has been added!").build(),HttpStatus.OK);
     }
     public ResponseEntity<AddPostResponseDTO> updatePost(UpdatePostRequestDTO updatePostRequestDTO, MultipartFile file){
         //wyciągamy oryginał z bazy danych, ustawiamy wartości, które są inne z dto do obiektu bazodanowego i z powrotem go zamieszczamy, jeżeli plik jest inny to najpierw zapisujemy plik i wyciągamy nowy id, usuwamy stary plik
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    public ResponseEntity<AddPostResponseDTO> deletePost(String id) throws PostNotFoundException {
+    public ResponseEntity<AddPostResponseDTO> deletePost(String id){
         //usuwamy posta z bazy, usuwamy też plik
-        Optional<PostDataEntity> dbPostDataEntity=Optional.ofNullable(postDataRepository.findById(id).orElseThrow(()->new PostNotFoundException("Post not found!")));
+         @NotNull Optional<PostDataEntity> dbPostDataEntity= Optional.ofNullable(postDataRepository.findById(id));
         //najpierw usuwamy plik:
-        String fileId=dbPostDataEntity.get().getFile_id().toString();
+        //String fileId=dbPostDataEntity.get().getFile_id().toString();
         //gridfs repo-> usuwa
         //po usunięciu usuwamy dane posta
         postDataRepository.deleteById(id);

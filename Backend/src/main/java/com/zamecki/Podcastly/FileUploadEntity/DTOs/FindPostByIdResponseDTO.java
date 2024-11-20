@@ -1,5 +1,6 @@
 package com.zamecki.Podcastly.FileUploadEntity.DTOs;
 
+import com.zamecki.Podcastly.FileUploadEntity.Model.Video;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,5 +19,5 @@ public class FindPostByIdResponseDTO {
     private String description;
     private String category;
     private List<String> tags;
-    private MultipartFile file;
+    private Video file;
 }

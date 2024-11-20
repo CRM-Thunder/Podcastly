@@ -1,4 +1,4 @@
-package com.zamecki.Podcastly.FileUploadEntity.Model;
+package com.zamecki.Podcastly.CustomContainers;
 
 import lombok.Builder;
 import lombok.Data;
