@@ -2,6 +2,7 @@ package com.zamecki.Podcastly.FileUploadEntity;
 
 import com.zamecki.Podcastly.CustomContainers.CustomDate;
 import com.zamecki.Podcastly.FileUploadEntity.DTOs.*;
+import com.zamecki.Podcastly.FileUploadEntity.Model.PodcastFile;
 import com.zamecki.Podcastly.FileUploadEntity.Model.PostDataEntity;
 import com.zamecki.Podcastly.FileUploadEntity.Repositories.GridsFSRepository;
 import com.zamecki.Podcastly.FileUploadEntity.Repositories.MongoTemplateRepository;
@@ -14,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -38,10 +38,13 @@ public class PostFileEntityService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    public ResponseEntity<FindPostByIdResponseDTO> findPostById(String id){
+    public ResponseEntity<FindPostByIdResponseDTO> findPostById(String id) throws IOException {
         //wyciaganie z bazy
         @NotNull Optional<PostDataEntity> dbPostDataEntity= Optional.ofNullable(postDataRepository.findById(id));
-        FindPostByIdResponseDTO findPostByIdResponseDTO=DTOConverter.FindPostByIdToDtoConv(dbPostDataEntity.get());
+        //wyszukanie pliku po id
+        PodcastFile podcastFile=gridsFSRepository.getPodcastFile(dbPostDataEntity.get().getFile_id());
+        System.out.println(podcastFile.toString());
+        FindPostByIdResponseDTO findPostByIdResponseDTO=DTOConverter.FindPostByIdToDtoConv(dbPostDataEntity.get(), podcastFile);
         return new ResponseEntity<>(findPostByIdResponseDTO, HttpStatus.OK);
     }
     public ResponseEntity<AddPostResponseDTO> addPost(AddPostRequestDTO addPostRequestDTO, MultipartFile file) throws IOException {

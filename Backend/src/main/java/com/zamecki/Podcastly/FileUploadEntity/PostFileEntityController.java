@@ -25,7 +25,7 @@ public class PostFileEntityController {
         return postFileEntityService.listAllPosts();
     }
     @GetMapping("/find/{id}")
-    public ResponseEntity<FindPostByIdResponseDTO> findPostById(@PathVariable String id){
+    public ResponseEntity<FindPostByIdResponseDTO> findPostById(@PathVariable String id) throws IOException {
         return postFileEntityService.findPostById(id);
     }
     @PostMapping("/add")

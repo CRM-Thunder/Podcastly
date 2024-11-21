@@ -2,8 +2,13 @@ package com.zamecki.Podcastly.FileUploadEntity.Repositories;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.client.gridfs.model.GridFSFile;
+import com.zamecki.Podcastly.FileUploadEntity.Model.PodcastFile;
+import com.zamecki.Podcastly.FileUploadEntity.exceptions.FileNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Component;
@@ -20,8 +25,19 @@ public class GridsFSRepository {
     public String addPodcastFile(MultipartFile file) throws IOException {
         DBObject metaData=new BasicDBObject();
         metaData.put("type",file.getContentType());
-        metaData.put("filename",file.getName());
-        ObjectId id=gridFsTemplate.store(file.getInputStream(),file.getName(),file.getContentType(),metaData);
+        metaData.put("filename",file.getOriginalFilename());
+        ObjectId id=gridFsTemplate.store(file.getInputStream(),file.getOriginalFilename(),file.getContentType(),metaData);
         return id.toString();
+    }
+    public PodcastFile getPodcastFile(String file_id) throws IOException {
+        Query query=new Query();
+        query.addCriteria(Criteria.where("id").is(file_id));
+        GridFSFile dbFile=gridFsOperations.findOne(query);
+        System.out.println(dbFile.toString());
+        if(dbFile==null) {
+            throw new FileNotFoundException("File not found!");
+        }else{
+            return PodcastFile.builder().name( dbFile.getMetadata().get("filename").toString()).inputStream(gridFsOperations.getResource(dbFile).getInputStream()).build();
+        }
     }
 }
