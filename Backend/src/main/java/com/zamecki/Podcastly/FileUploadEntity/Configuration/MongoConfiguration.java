@@ -8,8 +8,10 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
@@ -19,6 +21,8 @@ import java.util.Collection;
 import java.util.Collections;
 @Configuration
 public class MongoConfiguration extends AbstractMongoClientConfiguration {
+    @Autowired
+    private MappingMongoConverter mappingMongoConverter;
     @Override
     protected @NotNull String getDatabaseName() {
         return "Podcastly";
@@ -30,12 +34,23 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
         return MongoClients.create(mongoClientSettings);
     }
     @Override
-    public @NotNull Collection getMappingBasePackages(){
+    public @NotNull Collection <String> getMappingBasePackages(){
         return Collections.singleton("PostData");
     }
     @Bean
-    public GridFsTemplate gridFsTemplate(@Autowired MappingMongoConverter mongoConverter) {
-        return new GridFsTemplate(mongoDbFactory(), mongoConverter);
+    @Primary
+    public MongoDatabaseFactory mongoDatabaseFactory(@Autowired MongoClient mongoClient){
+        return new SimpleMongoClientDatabaseFactory(mongoClient,getDatabaseName());
     }
+
+    @Bean
+    public @NotNull MongoTemplate mongoTemplate(@NotNull MongoDatabaseFactory mongoDatabaseFactory){
+        return new MongoTemplate(mongoDatabaseFactory, mappingMongoConverter);
+    }
+    @Bean
+    public GridFsTemplate gridFsTemplate(@NotNull MongoDatabaseFactory mongoDatabaseFactory) {
+        return new GridFsTemplate(mongoDatabaseFactory, mappingMongoConverter);
+    }
+
 
 }

@@ -2,13 +2,12 @@ package com.zamecki.Podcastly.FileUploadEntity.Model;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import java.io.InputStream;
 
 @Builder
 @Data
-public class Video {
+public class PodcastFile {
     private String name;
     private InputStream inputStream;
 }

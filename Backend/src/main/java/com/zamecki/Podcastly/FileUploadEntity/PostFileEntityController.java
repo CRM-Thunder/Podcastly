@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 //Kontroler obsługujący requesty
@@ -28,7 +29,7 @@ public class PostFileEntityController {
         return postFileEntityService.findPostById(id);
     }
     @PostMapping("/add")
-    public ResponseEntity<AddPostResponseDTO> addPost(@NotNull @RequestPart("addPostRequestDTO") AddPostRequestDTO addPostRequestDTO, @RequestPart (value = "file", required = false) MultipartFile file){
+    public ResponseEntity<AddPostResponseDTO> addPost(@NotNull @RequestPart("addPostRequestDTO") AddPostRequestDTO addPostRequestDTO, @RequestPart (value = "file", required = false) MultipartFile file) throws IOException {
 
         return postFileEntityService.addPost(addPostRequestDTO, file);
     }

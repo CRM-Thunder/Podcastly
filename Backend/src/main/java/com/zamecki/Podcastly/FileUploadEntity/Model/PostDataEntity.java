@@ -25,5 +25,5 @@ public class PostDataEntity {
     private String description;
     private String category;
     private List <String> tags;
-    private ObjectId file_id;
+    private String file_id;
 }

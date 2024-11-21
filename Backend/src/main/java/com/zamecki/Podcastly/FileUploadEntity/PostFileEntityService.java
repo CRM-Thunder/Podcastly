@@ -3,6 +3,7 @@ package com.zamecki.Podcastly.FileUploadEntity;
 import com.zamecki.Podcastly.CustomContainers.CustomDate;
 import com.zamecki.Podcastly.FileUploadEntity.DTOs.*;
 import com.zamecki.Podcastly.FileUploadEntity.Model.PostDataEntity;
+import com.zamecki.Podcastly.FileUploadEntity.Repositories.GridsFSRepository;
 import com.zamecki.Podcastly.FileUploadEntity.Repositories.MongoTemplateRepository;
 import com.zamecki.Podcastly.FileUploadEntity.exceptions.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.swing.text.html.Option;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,9 +24,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class PostFileEntityService {
-    //trzeba ogarnąc repozytoria do GridFS
-    //private final PostDataRepository postDataRepository;
     private final MongoTemplateRepository postDataRepository;
+    private final GridsFSRepository gridsFSRepository;
 
     public ResponseEntity<List<ListAllResponseDTO>>listAllPosts(){
         List<PostDataEntity> dbPostDataEntityList=postDataRepository.findAll();
@@ -43,9 +44,9 @@ public class PostFileEntityService {
         FindPostByIdResponseDTO findPostByIdResponseDTO=DTOConverter.FindPostByIdToDtoConv(dbPostDataEntity.get());
         return new ResponseEntity<>(findPostByIdResponseDTO, HttpStatus.OK);
     }
-    public ResponseEntity<AddPostResponseDTO> addPost(AddPostRequestDTO addPostRequestDTO, MultipartFile file){
-        //najpierw zapisujemy plik, ale generuję mu sam id
-        //dodanie pliku, wyciągnięcie id itd...
+    public ResponseEntity<AddPostResponseDTO> addPost(AddPostRequestDTO addPostRequestDTO, MultipartFile file) throws IOException {
+
+        String file_id=gridsFSRepository.addPodcastFile(file);
         CustomDate date=new CustomDate();
         PostDataEntity postDataEntity=PostDataEntity.builder()
                 .id(ObjectId.get())
@@ -55,9 +56,8 @@ public class PostFileEntityService {
                 .description(addPostRequestDTO.getDescription())
                 .category(addPostRequestDTO.getCategory())
                 .tags(addPostRequestDTO.getTags())
-                .file_id(ObjectId.get())
+                .file_id(file_id)
                 .build();
-
         postDataRepository.addPost(postDataEntity);
         return new ResponseEntity<>(AddPostResponseDTO.builder().id(postDataEntity.getId().toString()).message("New podcast has been added!").build(),HttpStatus.OK);
     }

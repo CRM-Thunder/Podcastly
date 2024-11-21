@@ -1,9 +1,9 @@
 package com.zamecki.Podcastly.FileUploadEntity.DTOs;
 
-import com.zamecki.Podcastly.FileUploadEntity.Model.Video;
+import com.zamecki.Podcastly.FileUploadEntity.Model.PodcastFile;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 //w obiekcie tej klasy zwracane są dane dotyczące posta, konieczne może być zdefiniowanie struktury JSON do tego aby plik też zwrócić
@@ -19,5 +19,5 @@ public class FindPostByIdResponseDTO {
     private String description;
     private String category;
     private List<String> tags;
-    private Video file;
+    private PodcastFile file;
 }
