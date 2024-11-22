@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
@@ -8,134 +9,117 @@
 
   <title>Podcast.ly</title>
 
-  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
   <link rel="stylesheet" href="styles.css">
+
 </head>
 
-<body class="bg-secondary d-flex flex-column min-vh-100">
+<body class="full-container">
 
-  <!-- Nagłówek -->
-  <header class="bg-dark text-white py-2">
-    <div class="container d-flex justify-content-between align-items-center">
-      <!-- Logo -->
-      <a href="index.html" class="d-flex align-items-center text-dark text-decoration-none">
-        <img src="icon.png" width="200px" alt="podcastly-icon">
-      </a>
+<header class="header-container">
+  <div class="header-div">
+    <a href="index.html" class="logo-link">
+      <img src="icon.png" width="200px" alt="podcastly-icon">
+    </a>
 
-      <!-- Pasek Wyszukiwania -->
-      <form class="d-flex mx-auto w-50">
-        <input class="form-control me-2" type="search" placeholder="Szukaj" aria-label="Szukaj">
-        <button class="btn search-button" type="submit">Wyszukaj</button>
-      </form>
+    <form class="d-flex mx-auto w-50">
+      <input class="form-control me-2" type="search" placeholder="Szukaj" aria-label="Szukaj">
+      <button class="btn search-button" type="submit">Wyszukaj</button>
+    </form>
+  </div>
+</header>
+
+
+<main class="main-content">
+  <section class="article-section">
+    <div class="category-buttons">
+      <button class="category-button" type="submit">Sport</button>
+      <button class="category-button" type="submit">Kryminały</button>
+      <button class="category-button" type="submit">Historia</button>
+      <button class="category-button" type="submit">Polityka</button>
+      <button class="category-button" type="submit">Familijne</button>
+      <button class="category-button" type="submit">Zdrowie</button>
     </div>
-  </header>
 
-
-  <main class="flex-grow-1 d-flex justify-content-center">
-    <section class="article-section bg-secondary">
-      <div class="row text-center align-items-center g-0">
-        <div class="col-sm-2 text-white">
-          <button class="btn p-3 category-button" type="submit">Sport</button>
-        </div>
-        <div class="col-sm-2 text-white">
-          <button class="btn p-3 category-button" type="submit">Kryminały</button>
-        </div>
-        <div class="col-sm-2 text-white">
-          <button class="btn p-3 category-button" type="submit">Historia</button>
-        </div>
-        <div class="col-sm-2 text-white">
-          <button class="btn p-3 category-button" type="submit">Polityka</button>
-        </div>
-        <div class="col-sm-2 text-white">
-          <button class="btn p-3 category-button" type="submit">Familijne</button>
-        </div>
-        <div class="col-sm-2 text-white">
-          <button class="btn p-3 category-button" type="submit">Zdrowie</button>
-        </div>
-      </div>
-
-
-
-      <div class="container-fluid my-5 py-5">
-        <span><h2>Ostatnie opublikowane</h2></span><br><br>
-        <div class="row gx-3 gy-3">
-          <div class="col-3">
-            <div class="border-purple p-3 text-center bg-light">
-              <h5>Kolumna 1</h5>
-              <p>Przykładowa treść</p>
-            </div>
+    <div class="content-section">
+      <span>Ostatnie opublikowane</span>
+      <div class="content-row">
+        <div class="content-column">
+          <div class="content-box">
+            <h5>Kolumna 1</h5>
+            <p>Przykładowa treść</p>
           </div>
-          <div class="col-3">
-            <div class="border-purple p-3 text-center bg-light">
-              <h5>Kolumna 2</h5>
-              <p>Przykładowa treść</p>
-            </div>
+        </div>
+        <div class="content-column">
+          <div class="content-box">
+            <h5>Kolumna 2</h5>
+            <p>Przykładowa treść</p>
           </div>
-          <div class="col-3">
-            <div class="border-purple p-3 text-center bg-light">
-              <h5>Kolumna 3</h5>
-              <p>Przykładowa treść</p>
-            </div>
+        </div>
+        <div class="content-column">
+          <div class="content-box">
+            <h5>Kolumna 3</h5>
+            <p>Przykładowa treść</p>
           </div>
-          <div class="col-3">
-            <div class="border-purple p-3 text-center bg-light">
-              <h5>Kolumna 4</h5>
-              <p>Przykładowa treść</p>
-            </div>
+        </div>
+        <div class="content-column">
+          <div class="content-box">
+            <h5>Kolumna 4</h5>
+            <p>Przykładowa treść</p>
           </div>
         </div>
       </div>
-
-      <div class="container-fluid my-5 py-5">
-        <span><h2>Przykładowy tekst</h2></span><br><br>
-        <div class="row gx-3 gy-3">
-          <div class="col-3">
-            <div class="border-purple p-3 text-center bg-light">
-              <h5>Kolumna 1</h5>
-              <p>Przykładowa treść</p>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="border-purple p-3 text-center bg-light">
-              <h5>Kolumna 2</h5>
-              <p>Przykładowa treść</p>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="border-purple p-3 text-center bg-light">
-              <h5>Kolumna 3</h5>
-              <p>Przykładowa treść</p>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="border-purple p-3 text-center bg-light">
-              <h5>Kolumna 4</h5>
-              <p>Przykładowa treść</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  <script>
-    // testowanie XMLHttprequest
-    const xhttp = new XMLHttpRequest();
-    const url = "http://localhost:8080/rest/podcasts"
-
-    xhttp.open('GET', url + '/listall', true)
-    xhttp.onload = () => {
-      console.log(JSON.parse(xhttp.responseText)); // w konsoli pojawia się wszystkie podcasty
-    }
-    xhttp.send()
-  </script>
-  </main>
-
-
-  <footer class="bg-dark text-center py-3">
-    <div class="container">
-      <span class="text-white">Podcast.ly</span>
     </div>
-  </footer>
+
+    <div class="content-section">
+      <span>Gorące biseksy w twojej okolicy</span>
+      <div class="content-row">
+        <div class="content-column">
+          <div class="content-box">
+            <h5>Wojtek Gola</h5>
+            <p>Właściciel firmy z warzywozem</p>
+          </div>
+        </div>
+        <div class="content-column">
+          <div class="content-box">
+            <h5>Kolumna 2</h5>
+            <p>Przykładowa treść</p>
+          </div>
+        </div>
+        <div class="content-column">
+          <div class="content-box">
+            <h5>Kolumna 3</h5>
+            <p>Przykładowa treść</p>
+          </div>
+        </div>
+        <div class="content-column">
+          <div class="content-box">
+            <h5>Kolumna 4</h5>
+            <p>Przykładowa treść</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-container">
+    <span>Podcast.ly</span>
+  </div>
+</footer>
+
 </body>
 </html>
+
+<script>
+  // testowanie XMLHttprequest
+  const xhttp = new XMLHttpRequest();
+  const url = "http://localhost:8080/rest/podcasts"
+
+  xhttp.open('GET', url + '/listall', true)
+  xhttp.onload = () => {
+    console.log(JSON.parse(xhttp.responseText)); // w konsoli pojawia się wszystkie podcasty
+  }
+  xhttp.send()
+</script>
