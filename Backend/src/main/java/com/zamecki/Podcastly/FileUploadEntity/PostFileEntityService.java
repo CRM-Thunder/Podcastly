@@ -6,6 +6,7 @@ import com.zamecki.Podcastly.FileUploadEntity.Model.PodcastFile;
 import com.zamecki.Podcastly.FileUploadEntity.Model.PostDataEntity;
 import com.zamecki.Podcastly.FileUploadEntity.Repositories.GridsFSRepository;
 import com.zamecki.Podcastly.FileUploadEntity.Repositories.MongoTemplateRepository;
+import com.zamecki.Podcastly.FileUploadEntity.exceptions.PostNotAddedException;
 import com.zamecki.Podcastly.FileUploadEntity.exceptions.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
@@ -40,11 +41,11 @@ public class PostFileEntityService {
     }
     public ResponseEntity<FindPostByIdResponseDTO> findPostById(String id) throws IOException {
         //wyciaganie z bazy
-        @NotNull Optional<PostDataEntity> dbPostDataEntity= Optional.ofNullable(postDataRepository.findById(id));
+        PostDataEntity dbPostDataEntity= postDataRepository.findById(id);
         //wyszukanie pliku po id
-        PodcastFile podcastFile=gridsFSRepository.getPodcastFile(dbPostDataEntity.get().getFile_id());
+        PodcastFile podcastFile=gridsFSRepository.getPodcastFile(dbPostDataEntity.getFile_id());
         System.out.println(podcastFile.toString());
-        FindPostByIdResponseDTO findPostByIdResponseDTO=DTOConverter.FindPostByIdToDtoConv(dbPostDataEntity.get(), podcastFile);
+        FindPostByIdResponseDTO findPostByIdResponseDTO=DTOConverter.FindPostByIdToDtoConv(dbPostDataEntity, podcastFile);
         return new ResponseEntity<>(findPostByIdResponseDTO, HttpStatus.OK);
     }
     public ResponseEntity<AddPostResponseDTO> addPost(AddPostRequestDTO addPostRequestDTO, MultipartFile file) throws IOException {
@@ -61,8 +62,13 @@ public class PostFileEntityService {
                 .tags(addPostRequestDTO.getTags())
                 .file_id(file_id)
                 .build();
-        postDataRepository.addPost(postDataEntity);
-        return new ResponseEntity<>(AddPostResponseDTO.builder().id(postDataEntity.getId().toString()).message("New podcast has been added!").build(),HttpStatus.OK);
+        PostDataEntity savedEntity=postDataRepository.addPost(postDataEntity);
+        if(savedEntity!=null){
+            return new ResponseEntity<>(AddPostResponseDTO.builder().id(postDataEntity.getId().toString()).message("New podcast has been added!").build(),HttpStatus.OK);
+        }
+        else{
+            throw new PostNotAddedException("Post could not be added!");
+        }
     }
     public ResponseEntity<AddPostResponseDTO> updatePost(UpdatePostRequestDTO updatePostRequestDTO, MultipartFile file){
         //wyciągamy oryginał z bazy danych, ustawiamy wartości, które są inne z dto do obiektu bazodanowego i z powrotem go zamieszczamy, jeżeli plik jest inny to najpierw zapisujemy plik i wyciągamy nowy id, usuwamy stary plik
