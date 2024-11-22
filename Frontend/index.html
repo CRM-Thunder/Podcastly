@@ -59,7 +59,7 @@
 
 
       <div class="container-fluid my-5 py-5">
-        <span>Ostatnie opublikowane</span><br><br>
+        <span><h2>Ostatnie opublikowane</h2></span><br><br>
         <div class="row gx-3 gy-3">
           <div class="col-3">
             <div class="border-purple p-3 text-center bg-light">
@@ -89,12 +89,12 @@
       </div>
 
       <div class="container-fluid my-5 py-5">
-        <span>Gorące biseksy w twojej okolicy</span><br><br>
+        <span><h2>Przykładowy tekst</h2></span><br><br>
         <div class="row gx-3 gy-3">
           <div class="col-3">
             <div class="border-purple p-3 text-center bg-light">
-              <h5>Wojtek Gola</h5>
-              <p>Właściciel firmy z warzywozem</p>
+              <h5>Kolumna 1</h5>
+              <p>Przykładowa treść</p>
             </div>
           </div>
           <div class="col-3">
@@ -118,7 +118,17 @@
         </div>
       </div>
     </section>
+  <script>
+    // testowanie XMLHttprequest
+    const xhttp = new XMLHttpRequest();
+    const url = "http://localhost:8080/rest/podcasts"
 
+    xhttp.open('GET', url + '/listall', true)
+    xhttp.onload = () => {
+      console.log(JSON.parse(xhttp.responseText)); // w konsoli pojawia się wszystkie podcasty
+    }
+    xhttp.send()
+  </script>
   </main>
 
 
@@ -127,6 +137,5 @@
       <span class="text-white">Podcast.ly</span>
     </div>
   </footer>
-
 </body>
 </html>
