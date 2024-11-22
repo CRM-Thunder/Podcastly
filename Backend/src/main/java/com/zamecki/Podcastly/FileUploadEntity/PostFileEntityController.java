@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 //Kontroler obsługujący requesty
-
+@CrossOrigin(origins = "http://localhost:63343")
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/rest/podcasts")
