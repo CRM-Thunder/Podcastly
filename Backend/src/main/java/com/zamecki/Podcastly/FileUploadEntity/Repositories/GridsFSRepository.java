@@ -33,7 +33,6 @@ public class GridsFSRepository {
         Query query=new Query();
         query.addCriteria(Criteria.where("id").is(file_id));
         GridFSFile dbFile=gridFsOperations.findOne(query);
-        System.out.println(dbFile.toString());
         if(dbFile==null) {
             throw new FileNotFoundException("File not found!");
         }else{

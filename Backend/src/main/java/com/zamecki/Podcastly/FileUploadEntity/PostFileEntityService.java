@@ -10,15 +10,12 @@ import com.zamecki.Podcastly.FileUploadEntity.exceptions.PostNotAddedException;
 import com.zamecki.Podcastly.FileUploadEntity.exceptions.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 //Jest to serwis wykonujący operacje na repozytoriach mongo,
 
@@ -42,6 +39,9 @@ public class PostFileEntityService {
     public ResponseEntity<FindPostByIdResponseDTO> findPostById(String id) throws IOException {
         //wyciaganie z bazy
         PostDataEntity dbPostDataEntity= postDataRepository.findById(id);
+        if(dbPostDataEntity==null){
+            throw new PostNotFoundException("Post not found!");
+        }
         //wyszukanie pliku po id
         PodcastFile podcastFile=gridsFSRepository.getPodcastFile(dbPostDataEntity.getFile_id());
         System.out.println(podcastFile.toString());
@@ -63,12 +63,10 @@ public class PostFileEntityService {
                 .file_id(file_id)
                 .build();
         PostDataEntity savedEntity=postDataRepository.addPost(postDataEntity);
-        if(savedEntity!=null){
-            return new ResponseEntity<>(AddPostResponseDTO.builder().id(postDataEntity.getId().toString()).message("New podcast has been added!").build(),HttpStatus.OK);
-        }
-        else{
+        if(savedEntity==null){
             throw new PostNotAddedException("Post could not be added!");
         }
+        return new ResponseEntity<>(AddPostResponseDTO.builder().id(postDataEntity.getId().toString()).message("New podcast has been added!").build(),HttpStatus.OK);
     }
     public ResponseEntity<AddPostResponseDTO> updatePost(UpdatePostRequestDTO updatePostRequestDTO, MultipartFile file){
         //wyciągamy oryginał z bazy danych, ustawiamy wartości, które są inne z dto do obiektu bazodanowego i z powrotem go zamieszczamy, jeżeli plik jest inny to najpierw zapisujemy plik i wyciągamy nowy id, usuwamy stary plik
@@ -76,7 +74,10 @@ public class PostFileEntityService {
     }
     public ResponseEntity<AddPostResponseDTO> deletePost(String id){
         //usuwamy posta z bazy, usuwamy też plik
-         @NotNull Optional<PostDataEntity> dbPostDataEntity= Optional.ofNullable(postDataRepository.findById(id));
+         PostDataEntity dbPostDataEntity= postDataRepository.findById(id);
+         if(dbPostDataEntity==null){
+             throw new PostNotFoundException("Post not found!");
+         }
         //najpierw usuwamy plik:
         //String fileId=dbPostDataEntity.get().getFile_id().toString();
         //gridfs repo-> usuwa

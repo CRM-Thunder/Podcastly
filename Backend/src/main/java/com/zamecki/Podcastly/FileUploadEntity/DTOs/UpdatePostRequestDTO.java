@@ -2,7 +2,6 @@ package com.zamecki.Podcastly.FileUploadEntity.DTOs;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 @Getter

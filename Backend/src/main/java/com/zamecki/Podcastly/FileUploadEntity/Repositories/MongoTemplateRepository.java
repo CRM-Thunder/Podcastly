@@ -1,8 +1,6 @@
 package com.zamecki.Podcastly.FileUploadEntity.Repositories;
 
-import com.mongodb.client.MongoClient;
 import com.zamecki.Podcastly.FileUploadEntity.Model.PostDataEntity;
-import com.zamecki.Podcastly.FileUploadEntity.exceptions.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.*;
@@ -22,11 +20,7 @@ public class MongoTemplateRepository {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
         query.fields().include("id").include("created_at").include("modified_at").include("title").include("description").include("category").include("tags");
-        PostDataEntity result=mongoTemplate.findOne(query, PostDataEntity.class, "PostData");
-        if (result==null){
-            throw new PostNotFoundException("Post not found!");
-        }
-        return result;
+        return mongoTemplate.findOne(query, PostDataEntity.class, "PostData");
     }
     public PostDataEntity addPost(PostDataEntity postDataEntity){
         return mongoTemplate.save(postDataEntity);
