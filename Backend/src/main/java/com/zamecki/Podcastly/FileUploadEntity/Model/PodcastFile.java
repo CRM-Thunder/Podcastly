@@ -8,4 +8,5 @@ import java.io.InputStream;
 public class PodcastFile {
     private String name;
     private InputStream inputStream;
+    private String contentType;
 }

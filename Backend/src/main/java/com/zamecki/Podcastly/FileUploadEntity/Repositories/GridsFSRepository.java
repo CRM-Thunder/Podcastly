@@ -20,7 +20,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class GridsFSRepository {
     private final GridFsTemplate gridFsTemplate;
-    private final GridFsOperations gridFsOperations;
 
     public String addPodcastFile(MultipartFile file) throws IOException {
         DBObject metaData=new BasicDBObject();
@@ -31,12 +30,18 @@ public class GridsFSRepository {
     }
     public PodcastFile getPodcastFile(String file_id) throws IOException {
         Query query=new Query();
-        query.addCriteria(Criteria.where("id").is(file_id));
-        GridFSFile dbFile=gridFsOperations.findOne(query);
+        query.addCriteria(Criteria.where("_id").is(file_id));
+        GridFSFile dbFile=gridFsTemplate.findOne(query);
         if(dbFile==null) {
             throw new FileNotFoundException("File not found!");
         }else{
-            return PodcastFile.builder().name( dbFile.getMetadata().get("filename").toString()).inputStream(gridFsOperations.getResource(dbFile).getInputStream()).build();
+            return PodcastFile.builder().name( dbFile.getMetadata().get("filename").toString()).inputStream(gridFsTemplate.getResource(dbFile).getInputStream()).contentType(dbFile.getMetadata().get("_contentType").toString()).build();
         }
     }
+    public void deletePodcastFile(String file_id){
+        Query query=new Query();
+        query.addCriteria(Criteria.where("_id").is(file_id));
+        gridFsTemplate.delete(query);
+    }
+
 }

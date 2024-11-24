@@ -1,8 +1,12 @@
 package com.zamecki.Podcastly.FileUploadEntity;
 
 import com.zamecki.Podcastly.FileUploadEntity.DTOs.*;
+import com.zamecki.Podcastly.FileUploadEntity.Model.PodcastFile;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +31,14 @@ public class PostFileEntityController {
     @GetMapping("/find/{id}")
     public ResponseEntity<FindPostByIdResponseDTO> findPostById(@PathVariable String id) throws IOException {
         return postFileEntityService.findPostById(id);
+    }
+    @GetMapping("/stream/{id}")
+    public ResponseEntity<InputStreamResource> streamPodcastFile(@PathVariable String id) throws IOException {
+        PodcastFile podcastFile=postFileEntityService.getPodcastFile(id);
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(podcastFile.getContentType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION,"inline; filename=\""+podcastFile.getName()+"\"")
+                .body(new InputStreamResource(podcastFile.getInputStream()));
     }
     @PostMapping("/add")
     public ResponseEntity<AddPostResponseDTO> addPost(@NotNull @RequestPart("addPostRequestDTO") AddPostRequestDTO addPostRequestDTO, @RequestPart (value = "file", required = false) MultipartFile file) throws IOException {

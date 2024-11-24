@@ -6,6 +6,7 @@ import com.zamecki.Podcastly.FileUploadEntity.Model.PodcastFile;
 import com.zamecki.Podcastly.FileUploadEntity.Model.PostDataEntity;
 import com.zamecki.Podcastly.FileUploadEntity.Repositories.GridsFSRepository;
 import com.zamecki.Podcastly.FileUploadEntity.Repositories.MongoTemplateRepository;
+import com.zamecki.Podcastly.FileUploadEntity.exceptions.ContentTypeViolation;
 import com.zamecki.Podcastly.FileUploadEntity.exceptions.PostNotAddedException;
 import com.zamecki.Podcastly.FileUploadEntity.exceptions.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -36,20 +37,24 @@ public class PostFileEntityService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    public ResponseEntity<FindPostByIdResponseDTO> findPostById(String id) throws IOException {
+    public ResponseEntity<FindPostByIdResponseDTO> findPostById(String id){
         //wyciaganie z bazy
         PostDataEntity dbPostDataEntity= postDataRepository.findById(id);
         if(dbPostDataEntity==null){
             throw new PostNotFoundException("Post not found!");
         }
         //wyszukanie pliku po id
-        PodcastFile podcastFile=gridsFSRepository.getPodcastFile(dbPostDataEntity.getFile_id());
-        System.out.println(podcastFile.toString());
-        FindPostByIdResponseDTO findPostByIdResponseDTO=DTOConverter.FindPostByIdToDtoConv(dbPostDataEntity, podcastFile);
+        //PodcastFile podcastFile=gridsFSRepository.getPodcastFile(dbPostDataEntity.getFile_id());
+        FindPostByIdResponseDTO findPostByIdResponseDTO=DTOConverter.FindPostByIdToDtoConv(dbPostDataEntity);
         return new ResponseEntity<>(findPostByIdResponseDTO, HttpStatus.OK);
     }
+    public PodcastFile getPodcastFile(String id) throws IOException {
+        return gridsFSRepository.getPodcastFile(id);
+    }
     public ResponseEntity<AddPostResponseDTO> addPost(AddPostRequestDTO addPostRequestDTO, MultipartFile file) throws IOException {
-
+        if (!TikaValidator.isMp4File(file)){
+            throw new ContentTypeViolation("Uploaded file is not mp4!");
+        }
         String file_id=gridsFSRepository.addPodcastFile(file);
         CustomDate date=new CustomDate();
         PostDataEntity postDataEntity=PostDataEntity.builder()
@@ -73,15 +78,14 @@ public class PostFileEntityService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     public ResponseEntity<AddPostResponseDTO> deletePost(String id){
-        //usuwamy posta z bazy, usuwamy też plik
+
          PostDataEntity dbPostDataEntity= postDataRepository.findById(id);
          if(dbPostDataEntity==null){
              throw new PostNotFoundException("Post not found!");
          }
-        //najpierw usuwamy plik:
-        //String fileId=dbPostDataEntity.get().getFile_id().toString();
-        //gridfs repo-> usuwa
-        //po usunięciu usuwamy dane posta
+         if (dbPostDataEntity.getFile_id()!=null){
+             gridsFSRepository.deletePodcastFile(dbPostDataEntity.getFile_id());
+         }
         postDataRepository.deleteById(id);
         return new ResponseEntity<>(AddPostResponseDTO.builder().id(id).message("Podcast has been deleted!").build(), HttpStatus.OK);
     }

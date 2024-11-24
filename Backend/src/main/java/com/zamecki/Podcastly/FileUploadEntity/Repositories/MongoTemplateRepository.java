@@ -13,13 +13,13 @@ import java.util.List;
 public class MongoTemplateRepository {
     private final MongoTemplate mongoTemplate;
     public List<PostDataEntity> findAll() {
-        Query query = new Query();
+            Query query = new Query();
         query.fields().include("id").include("title").include("created_at").include("category").include("tags");
         return mongoTemplate.find(query, PostDataEntity.class, "PostData"); }
     public PostDataEntity findById(String id) {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
-        query.fields().include("id").include("created_at").include("modified_at").include("title").include("description").include("category").include("tags");
+        query.fields().include("id").include("created_at").include("modified_at").include("title").include("description").include("category").include("tags").include("file_id");
         return mongoTemplate.findOne(query, PostDataEntity.class, "PostData");
     }
     public PostDataEntity addPost(PostDataEntity postDataEntity){

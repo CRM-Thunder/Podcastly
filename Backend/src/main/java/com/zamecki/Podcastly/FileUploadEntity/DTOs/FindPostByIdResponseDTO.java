@@ -19,5 +19,5 @@ public class FindPostByIdResponseDTO {
     private String description;
     private String category;
     private List<String> tags;
-    private PodcastFile file;
+    private String file_id;
 }
