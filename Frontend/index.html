@@ -43,32 +43,8 @@
 
     <div class="content-section">
       <span>Ostatnie opublikowane</span>
-      <div class="content-row">
-        <div class="content-column">
-          <div class="content-box">
-            <h5>Kolumna 1</h5>
-            <p>Przykładowa treść</p>
-          </div>
-        </div>
-        <div class="content-column">
-          <div class="content-box">
-            <h5>Kolumna 2</h5>
-            <p>Przykładowa treść</p>
-          </div>
-        </div>
-        <div class="content-column">
-          <div class="content-box">
-            <h5>Kolumna 3</h5>
-            <p>Przykładowa treść</p>
-          </div>
-        </div>
-        <div class="content-column">
-          <div class="content-box">
-            <h5>Kolumna 4</h5>
-            <p>Przykładowa treść</p>
-          </div>
-        </div>
-      </div>
+      <div class="content-row"></div>
+      <script src="listLastUploaded.js"></script>
     </div>
 
     <div class="content-section">
@@ -111,15 +87,3 @@
 
 </body>
 </html>
-
-<script>
-  // testowanie XMLHttprequest
-  const xhttp = new XMLHttpRequest();
-  const url = "http://localhost:8080/rest/podcasts"
-
-  xhttp.open('GET', url + '/listall', true)
-  xhttp.onload = () => {
-    console.log(JSON.parse(xhttp.responseText)); // w konsoli pojawia się wszystkie podcasty
-  }
-  xhttp.send()
-</script>
