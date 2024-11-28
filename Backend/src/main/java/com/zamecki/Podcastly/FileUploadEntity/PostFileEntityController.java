@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 //Kontroler obsługujący requesty
-@CrossOrigin(origins = "http://localhost:63343")
+@CrossOrigin(origins = "http://localhost:63342")
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/rest/podcasts")
