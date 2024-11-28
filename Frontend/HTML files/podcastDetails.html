@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h3>Tu będzie strona, która wyświetla szczegóły danego podcastu</h3>
-<p id="podcast-id">dane będziemy zbierać za pomocą id: </p>
-<script>
-    const params = new URLSearchParams(document.location.search)
-    const id = params.get('id')
-    document.getElementById("podcast-id").innerHTML += id
-</script>
-</body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Jakub Mocek, Kevin Jankowski, Damian Zamęcki">
+
+    <link rel="stylesheet" href="../CSS%20files/details_style.css">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+
+    <body>
+        <div id="podcast-details">
+            <h3 id="podcast-title">Tytuł: </h3>
+            <p id="podcast-category"><b>Kategoria: </b></p>
+            <p id="podcast-description"><b>Opis: </b></p>
+            <p id="podcast-created-at"><b>Data dodania: </b> </p>
+            <p id="podcast-modified-at"><b>Ostatnia modyfikacja: </b></p>
+            <p id="podcast-tags"><b>Tagi: </b></p>
+        </div>
+
+        <script src="../scripts/openPodcastPage.js"></script>
+    </body>
+
 </html>

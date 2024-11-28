@@ -3,7 +3,7 @@ function readPodcastFromDb(){
     const xhr = new XMLHttpRequest();
     const url = "http://localhost:8080/rest/podcasts"
 
-// Otwarcie połączenia (url musi być zmieniony na taki, który wyświetla ostatnio opublikowane podcasty)
+    // Otwarcie połączenia (url musi być zmieniony na taki, który wyświetla ostatnio opublikowane podcasty)
     xhr.open('GET', url + '/listall', true)
 
     xhr.onload = () => {
