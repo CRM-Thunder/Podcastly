@@ -1,13 +1,17 @@
 package com.zamecki.Podcastly.FileUploadEntity.DTOs;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
+
 
 import java.util.List;
 @Getter
 @RequiredArgsConstructor
 
 public class UpdatePostRequestDTO {
+        @NotNull
         final String id;
         final String title;
         final String description;

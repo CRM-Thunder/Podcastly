@@ -2,6 +2,7 @@ package com.zamecki.Podcastly.FileUploadEntity;
 
 import com.zamecki.Podcastly.FileUploadEntity.DTOs.*;
 import com.zamecki.Podcastly.FileUploadEntity.Model.PodcastFile;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.InputStreamResource;
@@ -41,12 +42,12 @@ public class PostFileEntityController {
                 .body(new InputStreamResource(podcastFile.getInputStream()));
     }
     @PostMapping("/add")
-    public ResponseEntity<AddPostResponseDTO> addPost(@NotNull @RequestPart("addPostRequestDTO") AddPostRequestDTO addPostRequestDTO, @RequestPart (value = "file", required = false) MultipartFile file) throws IOException {
+    public ResponseEntity<AddPostResponseDTO> addPost(@NotNull @RequestPart("addPostRequestDTO") AddPostRequestDTO addPostRequestDTO, @RequestPart (value = "file") MultipartFile file) throws IOException {
 
         return postFileEntityService.addPost(addPostRequestDTO, file);
     }
     @PutMapping("/update")
-    public ResponseEntity<AddPostResponseDTO> updatePost(@RequestPart("updatePostRequestDTO") UpdatePostRequestDTO updatePostRequestDTO, @RequestPart (value = "file", required = false) MultipartFile file){
+    public ResponseEntity<AddPostResponseDTO> updatePost(@RequestPart("updatePostRequestDTO") @Valid UpdatePostRequestDTO updatePostRequestDTO, @RequestPart (value = "file", required = false) MultipartFile file) throws IOException {
         return postFileEntityService.updatePost(updatePostRequestDTO, file);
     }
     @DeleteMapping("/delete/{id}")

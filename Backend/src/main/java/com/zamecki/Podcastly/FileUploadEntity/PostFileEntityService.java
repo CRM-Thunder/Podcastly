@@ -7,6 +7,7 @@ import com.zamecki.Podcastly.FileUploadEntity.Model.PostDataEntity;
 import com.zamecki.Podcastly.FileUploadEntity.Repositories.GridsFSRepository;
 import com.zamecki.Podcastly.FileUploadEntity.Repositories.MongoTemplateRepository;
 import com.zamecki.Podcastly.FileUploadEntity.exceptions.ContentTypeViolation;
+import com.zamecki.Podcastly.FileUploadEntity.exceptions.EmptyUpdateViolation;
 import com.zamecki.Podcastly.FileUploadEntity.exceptions.PostNotAddedException;
 import com.zamecki.Podcastly.FileUploadEntity.exceptions.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ import java.util.List;
 public class PostFileEntityService {
     private final MongoTemplateRepository postDataRepository;
     private final GridsFSRepository gridsFSRepository;
+    private final MongoTemplateRepository mongoTemplateRepository;
 
     public ResponseEntity<List<ListAllResponseDTO>>listAllPosts(){
         List<PostDataEntity> dbPostDataEntityList=postDataRepository.findAll();
@@ -73,9 +75,25 @@ public class PostFileEntityService {
         }
         return new ResponseEntity<>(AddPostResponseDTO.builder().id(postDataEntity.getId().toString()).message("New podcast has been added!").build(),HttpStatus.OK);
     }
-    public ResponseEntity<AddPostResponseDTO> updatePost(UpdatePostRequestDTO updatePostRequestDTO, MultipartFile file){
-        //wyciągamy oryginał z bazy danych, ustawiamy wartości, które są inne z dto do obiektu bazodanowego i z powrotem go zamieszczamy, jeżeli plik jest inny to najpierw zapisujemy plik i wyciągamy nowy id, usuwamy stary plik
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<AddPostResponseDTO> updatePost(UpdatePostRequestDTO updatePostRequestDTO, MultipartFile file) throws IOException {
+        if(file!=null && TikaValidator.isMp4File(file)){
+            PostDataEntity dbPostDataEntity=postDataRepository.findById(updatePostRequestDTO.getId());
+            gridsFSRepository.deletePodcastFile(dbPostDataEntity.getFile_id());
+            String file_id=gridsFSRepository.addPodcastFile(file);
+            mongoTemplateRepository.updatePost(updatePostRequestDTO, file_id);
+        }
+        else if(file==null){
+            if (updatePostRequestDTO.getTitle()!=null || updatePostRequestDTO.getDescription()!=null || updatePostRequestDTO.getCategory()!=null||updatePostRequestDTO.getTags()!=null){
+                mongoTemplateRepository.updatePost(updatePostRequestDTO, null);
+            }else{
+                throw new EmptyUpdateViolation("All fields are null!");
+            }
+        }
+        else{
+            throw new ContentTypeViolation("Uploaded file is not mp4!");
+            //TODO: WYWALIĆ WSZYSTKIE CUSTOMOWE RUNTIME WYJĄTKI I ZROBIĆ 1 GŁÓWNY RuntimeException, tylko inne message ustawiać i inny kod http
+        }
+        return new ResponseEntity<>(AddPostResponseDTO.builder().id(updatePostRequestDTO.getId()).message("Podcast has been updated!").build() ,HttpStatus.OK);
     }
     public ResponseEntity<AddPostResponseDTO> deletePost(String id){
 

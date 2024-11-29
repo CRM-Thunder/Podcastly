@@ -1,5 +1,7 @@
 package com.zamecki.Podcastly.FileUploadEntity.Repositories;
 
+import com.zamecki.Podcastly.CustomContainers.CustomDate;
+import com.zamecki.Podcastly.FileUploadEntity.DTOs.UpdatePostRequestDTO;
 import com.zamecki.Podcastly.FileUploadEntity.Model.PostDataEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -29,5 +31,28 @@ public class MongoTemplateRepository {
         Query query= new Query();
         query.addCriteria(Criteria.where("id").is(id));
         mongoTemplate.remove(query,PostDataEntity.class, "PostData");
+    }
+    public void updatePost(UpdatePostRequestDTO updatePostRequestDTO, String file_id){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(updatePostRequestDTO.getId()));
+        Update update = new Update();
+        if(updatePostRequestDTO.getTitle() != null){
+            update.set("title", updatePostRequestDTO.getTitle());
+        }
+        if(updatePostRequestDTO.getDescription() != null){
+            update.set("description", updatePostRequestDTO.getDescription());
+        }
+        if(updatePostRequestDTO.getCategory() != null){
+            update.set("category", updatePostRequestDTO.getCategory());
+        }
+        if(updatePostRequestDTO.getTags() != null){
+            update.set("tags", updatePostRequestDTO.getTags());
+        }
+        if (file_id!=null){
+            update.set("file_id", file_id);
+        }
+        CustomDate date=new CustomDate();
+        update.set("modified_at",date.getDateTime());
+        mongoTemplate.updateFirst(query,update,PostDataEntity.class);
     }
 }
