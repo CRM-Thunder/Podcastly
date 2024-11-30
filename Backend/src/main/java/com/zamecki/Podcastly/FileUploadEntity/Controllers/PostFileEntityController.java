@@ -1,7 +1,8 @@
-package com.zamecki.Podcastly.FileUploadEntity;
+package com.zamecki.Podcastly.FileUploadEntity.Controllers;
 
 import com.zamecki.Podcastly.FileUploadEntity.DTOs.*;
 import com.zamecki.Podcastly.FileUploadEntity.Model.PodcastFile;
+import com.zamecki.Podcastly.FileUploadEntity.Services.PostFileEntityService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 //Kontroler obsługujący requesty
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(origins = "http://localhost:63343")
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/rest/podcasts")
@@ -30,9 +31,18 @@ public class PostFileEntityController {
         return postFileEntityService.listAllPosts();
     }
     @GetMapping("/find/{id}")
-    public ResponseEntity<FindPostByIdResponseDTO> findPostById(@PathVariable String id) throws IOException {
+    public ResponseEntity<FindPostResponseDTO> findPostById(@PathVariable String id) throws IOException {
         return postFileEntityService.findPostById(id);
     }
+    @GetMapping("/find/category/{category}")
+    public ResponseEntity<List<ListAllResponseDTO>> listAllByCategory(@PathVariable String category) throws IOException {
+        return postFileEntityService.listAllByCategory(category);
+    }
+    @GetMapping("/find/title/{title}")
+    public ResponseEntity<List<ListAllResponseDTO>> listAllByTitle(@PathVariable String title) throws IOException {
+        return postFileEntityService.listAllByTitleContaining(title);
+    }
+
     @GetMapping("/stream/{id}")
     public ResponseEntity<InputStreamResource> streamPodcastFile(@PathVariable String id) throws IOException {
         PodcastFile podcastFile=postFileEntityService.getPodcastFile(id);

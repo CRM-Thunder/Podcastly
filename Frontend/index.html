@@ -33,12 +33,13 @@
 <main class="main-content">
   <section class="article-section">
     <div class="category-buttons">
-      <button class="category-button" type="submit">Sport</button>
-      <button class="category-button" type="submit">Kryminały</button>
-      <button class="category-button" type="submit">Historia</button>
-      <button class="category-button" type="submit">Polityka</button>
-      <button class="category-button" type="submit">Familijne</button>
-      <button class="category-button" type="submit">Zdrowie</button>
+      <button class="category-button" type="submit" onclick="listByCategory('sport')">Sport</button>
+      <button class="category-button" type="submit" onclick="listByCategory('criminal')">Kryminały</button>
+      <button class="category-button" type="submit" onclick="listByCategory('history')">Historia</button>
+      <button class="category-button" type="submit" onclick="listByCategory('politics')">Polityka</button>
+      <button class="category-button" type="submit" onclick="listByCategory('family')">Familijne</button>
+      <button class="category-button" type="submit" onclick="listByCategory('health')">Zdrowie</button>
+      <script src="scripts/listByCategory.js"></script>
     </div>
 
     <!-- Sekcja odpowiedzialna za ostanio opublikowane podcasty -->
@@ -48,35 +49,8 @@
       <script src="scripts/listLastUploaded.js"></script>
     </div>
 
-    <div class="content-section">
-      <span>Najpopularniejsze:</span>
-      <div class="content-row">
-        <div class="content-column">
-          <div class="content-box">
-            <h5>Kolumna 1</h5>
-            <p>Przykładowa treść</p>
-          </div>
-        </div>
-        <div class="content-column">
-          <div class="content-box">
-            <h5>Kolumna 2</h5>
-            <p>Przykładowa treść</p>
-          </div>
-        </div>
-        <div class="content-column">
-          <div class="content-box">
-            <h5>Kolumna 3</h5>
-            <p>Przykładowa treść</p>
-          </div>
-        </div>
-        <div class="content-column">
-          <div class="content-box">
-            <h5>Kolumna 4</h5>
-            <p>Przykładowa treść</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <iframe id="podcast-by-category-frame" src=""></iframe>
+
   </section>
 </main>
 

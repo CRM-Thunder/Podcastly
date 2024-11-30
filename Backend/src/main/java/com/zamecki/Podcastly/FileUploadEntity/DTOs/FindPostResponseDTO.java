@@ -1,6 +1,5 @@
 package com.zamecki.Podcastly.FileUploadEntity.DTOs;
 
-import com.zamecki.Podcastly.FileUploadEntity.Model.PodcastFile;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,10 +10,9 @@ import java.util.List;
 @Data
 @Builder
 
-public class FindPostByIdResponseDTO {
+public class FindPostResponseDTO {
     private String id;
     private String created_at;
-    private String modified_at;
     private String title;
     private String description;
     private String category;
