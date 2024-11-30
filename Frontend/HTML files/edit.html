@@ -8,7 +8,6 @@
   <meta name="author" content="Jakub Mocek, Kevin Jankowski, Damian Zamęcki">
 
   <title>Podcast.ly</title>
-
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="../CSS%20files/styles.css">
 
@@ -18,12 +17,48 @@
 
 <header class="header-container">
   <div class="header-div-dashboard">
-    <h1>Dashboard</h1>
+    <a href="dashboard.html" class="text-link">
+      <h1>Dashboard</h1>
+    </a>
   </div>
 </header>
 
 
-<main class="main-content-dashboard">
+<main class="main-content-dashboard-add">
+
+  <form class="dashboard-add-form" id="dashboard-add-form" autocomplete="off">
+    <div class="form-group">
+      <label for="title">Nazwa:</label>
+      <input type="text" id="title" name="title" placeholder="Wpisz nazwę">
+    </div>
+    <div class="form-group">
+      <label for="description">Opis:</label>
+      <textarea id="description" name="description" placeholder="Wpisz swój opis tutaj..."></textarea>
+    </div>
+    <div class="form-group">
+      <label for="category">Wybierz kategorię:</label>
+      <select id="category" name="category">
+        <option value="sport">Sport</option>
+        <option value="kryminaly">Kryminały</option>
+        <option value="historia">Historia</option>
+        <option value="polityka">Polityka</option>
+        <option value="familijne">Familijne</option>
+        <option value="zdrowie">Zdrowie</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="tag-input">Dodaj tagi:</label>
+      <input type="text" id="tag-input" placeholder="Wpisz tag i wciśnij Enter">
+    </div>
+    <div class="tags-container" id="tags-container"></div>
+    <div class="form-group">
+      <label for="file">Załącz plik:</label>
+      <input type="file" id="file" name="file">
+    </div>
+    <button class="btn-sub"type="submit">Wyślij</button>
+  </form>
+
+  <script src="../scripts/editPodcast.js"></script>
 
 </main>
 
