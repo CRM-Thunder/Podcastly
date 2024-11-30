@@ -1,4 +1,4 @@
-package com.zamecki.Podcastly.FileUploadEntity;
+package com.zamecki.Podcastly.FileUploadEntity.TikaValidation;
 import org.apache.tika.Tika;
 import org.springframework.web.multipart.MultipartFile;
 

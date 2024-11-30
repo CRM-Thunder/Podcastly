@@ -3,13 +3,12 @@ package com.zamecki.Podcastly.FileUploadEntity.Repositories;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
+import com.zamecki.Podcastly.FileUploadEntity.Exceptions.CustomRuntimeException;
 import com.zamecki.Podcastly.FileUploadEntity.Model.PodcastFile;
-import com.zamecki.Podcastly.FileUploadEntity.exceptions.FileNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,8 +32,9 @@ public class GridsFSRepository {
         query.addCriteria(Criteria.where("_id").is(file_id));
         GridFSFile dbFile=gridFsTemplate.findOne(query);
         if(dbFile==null) {
-            throw new FileNotFoundException("File not found!");
+            throw new CustomRuntimeException("File not found!");
         }else{
+            //TODO: Zrobić weryfikację czy są metadane, jak nie to wpisywać nulle
             return PodcastFile.builder().name( dbFile.getMetadata().get("filename").toString()).inputStream(gridFsTemplate.getResource(dbFile).getInputStream()).contentType(dbFile.getMetadata().get("_contentType").toString()).build();
         }
     }
