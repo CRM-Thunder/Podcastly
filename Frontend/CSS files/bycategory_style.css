@@ -1,3 +1,30 @@
 #category-name {
     font-size: 2em;
+    font-family: Calibri, sans-serif;
+}
+
+html{
+    width: 100%;
+}
+
+.content-section {
+    margin-top: 40px;
+}
+
+.content-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.content-column {
+    flex: 1 1 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+}
+
+.content-box {
+    background-color: #f8f9fa;
+    border: 2px solid #6f42c1; /* Fioletowy Bootstrap */
+    padding: 20px;
+    text-align: center;
 }

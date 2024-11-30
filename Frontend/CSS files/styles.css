@@ -121,6 +121,15 @@ Jakiś blok, po usunięciu na nic nie wpłynął
     text-align: center;
 }
 
+#podcast-by-category-frame{
+    width: 100%;
+    height: 70%
+}
+
+#last-published{
+    font-size: 2em;
+}
+
 /* Stopka */
 
 .footer {

@@ -9,13 +9,15 @@ function readPodcastFromDb(){
     xhr.onload = () => {
         var response = JSON.parse(xhr.responseText);
 
+        //console.log(response);
+
         // Pobranie kontenera wiersza
         const rowContainer = document.querySelector('.content-row');
 
         // Pętla dodająca kolumny
         for (let i = 0; i < 4; i++) {
 
-            // Tworzenie elementu HTML
+            // Tworzenie elementu HTML (kolumny)
             const contentColumn = document.createElement('div');
             contentColumn.className = 'content-column';
 

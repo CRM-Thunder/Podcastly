@@ -34,24 +34,25 @@
   <section class="article-section">
     <div class="category-buttons">
       <button class="category-button" type="submit" onclick="listByCategory('sport')">Sport</button>
-      <button class="category-button" type="submit" onclick="listByCategory('criminal')">Kryminały</button>
-      <button class="category-button" type="submit" onclick="listByCategory('history')">Historia</button>
-      <button class="category-button" type="submit" onclick="listByCategory('politics')">Polityka</button>
-      <button class="category-button" type="submit" onclick="listByCategory('family')">Familijne</button>
-      <button class="category-button" type="submit" onclick="listByCategory('health')">Zdrowie</button>
+      <button class="category-button" type="submit" onclick="listByCategory('Kryminalne')">Kryminalne</button>
+      <button class="category-button" type="submit" onclick="listByCategory('Historia')">Historia</button>
+      <button class="category-button" type="submit" onclick="listByCategory('Polityka')">Polityka</button>
+      <button class="category-button" type="submit" onclick="listByCategory('Familijne')">Familijne</button>
+      <button class="category-button" type="submit" onclick="listByCategory('Zdrowie')">Zdrowie</button>
       <script src="scripts/listByCategory.js"></script>
     </div>
 
     <!-- Sekcja odpowiedzialna za ostanio opublikowane podcasty -->
     <div class="content-section">
-      <span>Ostatnie opublikowane</span>
+      <p id="last-published">Ostanio opublikowane podcasty: </p>
       <div class="content-row"></div>
       <script src="scripts/listLastUploaded.js"></script>
     </div>
 
     <iframe id="podcast-by-category-frame" src=""></iframe>
-
   </section>
+
+
 </main>
 
 <footer class="footer">
