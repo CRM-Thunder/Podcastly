@@ -14,8 +14,24 @@ function readPodcastFromDb(){
         // Pobranie kontenera wiersza
         const rowContainer = document.querySelector('.content-row');
 
-        // Pętla dodająca kolumny
-        for (let i = 0; i < 4; i++) {
+        response.forEach(item => {
+            // Tworzenie elementu HTML (kolumny)
+            const contentColumn = document.createElement('div');
+            contentColumn.className = 'content-column';
+
+            contentColumn.innerHTML = `
+              <div class="content-box" onclick="openPodcast(\'` + item.id + `\')">
+                <h5>` + item.title + `</h5>
+                <p>` + item.created_at + `</p>
+              </div>
+            `;
+
+            // Dodanie kolumny do kontenera wiersza
+            rowContainer.appendChild(contentColumn);
+        })
+
+       /* // Pętla dodająca kolumny
+        for (let i = 0; i < 5; i++) {
 
             // Tworzenie elementu HTML (kolumny)
             const contentColumn = document.createElement('div');
@@ -32,7 +48,7 @@ function readPodcastFromDb(){
 
             // Dodanie kolumny do kontenera wiersza
             rowContainer.appendChild(contentColumn);
-        }
+        }*/
     }
     xhr.send()
 

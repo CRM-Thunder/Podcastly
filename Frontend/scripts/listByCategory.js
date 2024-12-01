@@ -3,6 +3,9 @@ function listByCategory(category) {
     // Utworzenie zmiennej przechowującej iframe
     const iframe = document.getElementById("podcast-by-category-frame");
 
+    // Ukrycie sekcji odpowiedzialnej za ostatnio opublikowane podcasty
+    const content_section = document.getElementById("content-section");
+    content_section.style.display = "none";
 
     // Utworzenie nowego obiektu klasy XMLHttpRequest
     const xhr = new XMLHttpRequest();

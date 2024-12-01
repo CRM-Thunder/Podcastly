@@ -23,8 +23,9 @@
     </a>
 
     <form class="d-flex mx-auto w-50">
-      <input class="form-control me-2" type="search" placeholder="Szukaj" aria-label="Szukaj">
-      <button class="btn search-button" type="submit">Wyszukaj</button>
+      <input id="podcast-search-bar" class="form-control me-2" type="search" placeholder="Szukaj" aria-label="Szukaj">
+      <button id="podcast-search-button" class="btn search-button" type="button" onclick="listByTitle()">Wyszukaj</button>
+      <script src="scripts/listByTitle.js"></script>
     </form>
   </div>
 </header>
@@ -36,17 +37,17 @@
       <button class="category-button" type="submit" onclick="listByCategory('sport')">Sport</button>
       <button class="category-button" type="submit" onclick="listByCategory('Kryminalne')">Kryminalne</button>
       <button class="category-button" type="submit" onclick="listByCategory('Historia')">Historia</button>
-      <button class="category-button" type="submit" onclick="listByCategory('Polityka')">Polityka</button>
+      <button class="category-button" type="submit" onclick="listByCategory('polityka')">Polityka</button>
       <button class="category-button" type="submit" onclick="listByCategory('Familijne')">Familijne</button>
       <button class="category-button" type="submit" onclick="listByCategory('Zdrowie')">Zdrowie</button>
       <script src="scripts/listByCategory.js"></script>
     </div>
 
     <!-- Sekcja odpowiedzialna za ostanio opublikowane podcasty -->
-    <div class="content-section">
-      <p id="last-published">Ostanio opublikowane podcasty: </p>
+    <div id="content-section" class="content-section">
+      <p id="last-published">Wszystkie opublikowane podcasty: </p>
       <div class="content-row"></div>
-      <script src="scripts/listLastUploaded.js"></script>
+      <script src="scripts/listAllPodcasts.js"></script>
     </div>
 
     <iframe id="podcast-by-category-frame" src=""></iframe>

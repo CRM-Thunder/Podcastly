@@ -21,9 +21,9 @@ function openPodcastPage() {
         const category = response.category
         const description= response.description
         const created_at = response.created_at
-        const modified_at = response.modified_at
+        //const modified_at = response.modified_at
         const tags = response.tags
-        const file_id = response.file_id
+        //const file_id = response.file_id
 
         // Przypisanie tagów do zmiennej string, separator to ','
         let sTags = ""
@@ -38,7 +38,7 @@ function openPodcastPage() {
         document.getElementById("podcast-category").innerHTML += category;
         document.getElementById("podcast-description").innerHTML += description;
         document.getElementById("podcast-created-at").innerHTML += created_at;
-        document.getElementById("podcast-modified-at").innerHTML += modified_at;
+        //document.getElementById("podcast-modified-at").innerHTML += modified_at;
         document.getElementById("podcast-tags").innerHTML += tags;
 
     }
