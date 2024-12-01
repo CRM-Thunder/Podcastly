@@ -121,7 +121,7 @@ Jakiś blok, po usunięciu na nic nie wpłynął
     text-align: center;
 }
 
-#podcast-by-category-frame{
+#podcast-iframe{
     width: 100%;
     height: 70%
 }

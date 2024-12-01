@@ -25,8 +25,8 @@
     <form class="d-flex mx-auto w-50">
       <input id="podcast-search-bar" class="form-control me-2" type="search" placeholder="Szukaj" aria-label="Szukaj">
       <button id="podcast-search-button" class="btn search-button" type="button" onclick="listByTitle()">Wyszukaj</button>
-      <script src="scripts/listByTitle.js"></script>
     </form>
+    <script src="scripts/listByTitle.js"></script>
   </div>
 </header>
 
@@ -34,12 +34,12 @@
 <main class="main-content">
   <section class="article-section">
     <div class="category-buttons">
-      <button class="category-button" type="submit" onclick="listByCategory('sport')">Sport</button>
-      <button class="category-button" type="submit" onclick="listByCategory('Kryminalne')">Kryminalne</button>
-      <button class="category-button" type="submit" onclick="listByCategory('Historia')">Historia</button>
-      <button class="category-button" type="submit" onclick="listByCategory('polityka')">Polityka</button>
-      <button class="category-button" type="submit" onclick="listByCategory('Familijne')">Familijne</button>
-      <button class="category-button" type="submit" onclick="listByCategory('Zdrowie')">Zdrowie</button>
+      <button class="category-button" type="button" onclick="listByCategory('sport')">Sport</button>
+      <button class="category-button" type="button" onclick="listByCategory('Kryminalne')">Kryminalne</button>
+      <button class="category-button" type="button" onclick="listByCategory('Historia')">Historia</button>
+      <button class="category-button" type="button" onclick="listByCategory('polityka')">Polityka</button>
+      <button class="category-button" type="button" onclick="listByCategory('Familijne')">Familijne</button>
+      <button class="category-button" type="button" onclick="listByCategory('Zdrowie')">Zdrowie</button>
       <script src="scripts/listByCategory.js"></script>
     </div>
 
@@ -50,7 +50,7 @@
       <script src="scripts/listAllPodcasts.js"></script>
     </div>
 
-    <iframe id="podcast-by-category-frame" src=""></iframe>
+    <iframe id="podcast-iframe" src=""></iframe>
   </section>
 
 

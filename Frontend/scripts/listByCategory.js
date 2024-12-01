@@ -1,7 +1,7 @@
 function listByCategory(category) {
 
     // Utworzenie zmiennej przechowującej iframe
-    const iframe = document.getElementById("podcast-by-category-frame");
+    const iframe = document.getElementById("podcast-iframe");
 
     // Ukrycie sekcji odpowiedzialnej za ostatnio opublikowane podcasty
     const content_section = document.getElementById("content-section");
@@ -18,7 +18,7 @@ function listByCategory(category) {
 
         var response = JSON.parse(xhr.responseText);
 
-        iframe.src = "HTML files/podcastsByCategory.html";
+        iframe.src = "HTML files/iframePlaceholder.html";
 
         iframe.onload = () => {
             try {
@@ -26,14 +26,14 @@ function listByCategory(category) {
                 const iframeDocument = iframe.contentDocument
 
                 // Dodanie do nagłówka iframe'u nazwy karegorii
-                const categoryName = iframeDocument.getElementById("category-name");
-                categoryName.textContent += category;
+                const categoryName = iframeDocument.getElementById("iframe-header");
+                categoryName.textContent = "Podcasty z kategorii: " + category;
 
                 // Pobranie kontenera wiersza
                 const rowContainer = iframeDocument.querySelector('.content-row');
 
                 // Jeśli jest jakiś podcast do wyświetlenia, to ... (to trzeba zmienić, bo nie działa)
-                if (response) {
+                if (response && Array.isArray(response)) {
 
                     // Pętla for each iterująca po wszystkich wynikach z JSONa
                     response.forEach(item => {

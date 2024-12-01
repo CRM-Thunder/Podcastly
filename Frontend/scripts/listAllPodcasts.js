@@ -30,25 +30,6 @@ function readPodcastFromDb(){
             rowContainer.appendChild(contentColumn);
         })
 
-       /* // Pętla dodająca kolumny
-        for (let i = 0; i < 5; i++) {
-
-            // Tworzenie elementu HTML (kolumny)
-            const contentColumn = document.createElement('div');
-            contentColumn.className = 'content-column';
-
-            let podcast_id = response[i].id
-
-            contentColumn.innerHTML = `
-              <div class="content-box" onclick="openPodcast(\'` + podcast_id + `\')">
-                <h5>` + response[i].title + `</h5>
-                <p>` + response[i].created_at + `</p>
-              </div>
-            `;
-
-            // Dodanie kolumny do kontenera wiersza
-            rowContainer.appendChild(contentColumn);
-        }*/
     }
     xhr.send()
 
