@@ -1,6 +1,26 @@
-#podcast-details{
-    max-width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
+/* Styl ogólny dla ciała strony */
+body {
+    background-color: #6c757d; /* Kolor tła */
+    font-family: Calibri, serif; /* Styl czcionki */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Wyrównanie elementów w poziomie */
+    align-items: center; /* Wyrównanie elementów w pionie */
+    height: 100vh; /* Ustawienie pełnej wysokości ekranu */
 }
 
+/* Styl dla kontenera szczegółów podcastu */
+#podcast-details {
+    margin-left: 20px; /* Odstęp od odtwarzacza wideo */
+    font-size: 20px;
+    word-wrap: break-word; /* Zawijanie długich wyrazów */
+    overflow-wrap: break-word; /* Dodatkowe zawijanie dla kompatybilności */
+    max-width: 400px; /* Opcjonalne ograniczenie szerokości */
+}
+
+/* Styl dla odtwarzacza wideo */
+#videoPlayer {
+    flex-shrink: 0; /* Zapobiega zmniejszaniu rozmiaru odtwarzacza */
+    margin-left: 30px;
+}
