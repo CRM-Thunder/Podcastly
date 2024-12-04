@@ -3,12 +3,15 @@ package com.zamecki.Podcastly.FileUploadEntity.Services;
 import com.zamecki.Podcastly.CustomContainers.CustomDate;
 import com.zamecki.Podcastly.FileUploadEntity.DTOs.DTOConverter;
 import com.zamecki.Podcastly.FileUploadEntity.DTOs.*;
+import com.zamecki.Podcastly.FileUploadEntity.Exceptions.AllUpdateFieldsAreNullException;
+import com.zamecki.Podcastly.FileUploadEntity.Exceptions.FileTypeViolationException;
+import com.zamecki.Podcastly.FileUploadEntity.Exceptions.PostNotSavedException;
 import com.zamecki.Podcastly.FileUploadEntity.Model.PodcastFile;
 import com.zamecki.Podcastly.FileUploadEntity.Model.PostDataEntity;
 import com.zamecki.Podcastly.FileUploadEntity.Repositories.GridsFSRepository;
 import com.zamecki.Podcastly.FileUploadEntity.Repositories.MongoTemplateRepository;
 import com.zamecki.Podcastly.FileUploadEntity.TikaValidation.TikaValidator;
-import com.zamecki.Podcastly.FileUploadEntity.Exceptions.CustomRuntimeException;
+import com.zamecki.Podcastly.FileUploadEntity.Exceptions.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
@@ -38,7 +41,7 @@ public class PostFileEntityService {
     public ResponseEntity<FindPostResponseDTO> findPostById(String id){
         PostDataEntity dbPostDataEntity= postDataRepository.findById(id);
         if(dbPostDataEntity==null){
-            throw new CustomRuntimeException("Post not found!");
+            throw new ObjectNotFoundException("Post not found!");
         }
         FindPostResponseDTO findPostResponseDTO=DTOConverter.FindPostByIdToDtoConv(dbPostDataEntity);
         return new ResponseEntity<>(findPostResponseDTO, HttpStatus.OK);
@@ -69,7 +72,7 @@ public class PostFileEntityService {
     }
     public ResponseEntity<AddPostResponseDTO> addPost(AddPostRequestDTO addPostRequestDTO, MultipartFile file) throws IOException {
         if (!TikaValidator.isMp4File(file)){
-            throw new CustomRuntimeException("Uploaded file is not mp4!");
+            throw new FileTypeViolationException("Uploaded file is not mp4!");
         }
         String file_id=gridsFSRepository.addPodcastFile(file);
         CustomDate date=new CustomDate();
@@ -85,7 +88,7 @@ public class PostFileEntityService {
                 .build();
         PostDataEntity savedEntity=postDataRepository.addPost(postDataEntity);
         if(savedEntity==null){
-            throw new CustomRuntimeException("Post could not be added!");
+            throw new PostNotSavedException("Post could not be added!");
         }
         return new ResponseEntity<>(AddPostResponseDTO.builder().id(postDataEntity.getId().toString()).message("New podcast has been added!").build(),HttpStatus.OK);
     }
@@ -100,11 +103,11 @@ public class PostFileEntityService {
             if (updatePostRequestDTO.getTitle()!=null || updatePostRequestDTO.getDescription()!=null || updatePostRequestDTO.getCategory()!=null||updatePostRequestDTO.getTags()!=null){
                 mongoTemplateRepository.updatePost(updatePostRequestDTO, null);
             }else{
-                throw new CustomRuntimeException("All fields are null!");
+                throw new AllUpdateFieldsAreNullException("All fields are null!");
             }
         }
         else{
-            throw new CustomRuntimeException("Uploaded file is not mp4!");
+            throw new FileTypeViolationException("Uploaded file is not mp4!");
         }
         return new ResponseEntity<>(AddPostResponseDTO.builder().id(updatePostRequestDTO.getId()).message("Podcast has been updated!").build() ,HttpStatus.OK);
     }
@@ -112,7 +115,7 @@ public class PostFileEntityService {
 
          PostDataEntity dbPostDataEntity= postDataRepository.findById(id);
          if(dbPostDataEntity==null){
-             throw new CustomRuntimeException("Post not found!");
+             throw new ObjectNotFoundException("Post not found!");
          }
          if (dbPostDataEntity.getFile_id()!=null){
              gridsFSRepository.deletePodcastFile(dbPostDataEntity.getFile_id());

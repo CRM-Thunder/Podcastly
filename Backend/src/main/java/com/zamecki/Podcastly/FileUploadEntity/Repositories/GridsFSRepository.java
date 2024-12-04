@@ -3,7 +3,7 @@ package com.zamecki.Podcastly.FileUploadEntity.Repositories;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
-import com.zamecki.Podcastly.FileUploadEntity.Exceptions.CustomRuntimeException;
+import com.zamecki.Podcastly.FileUploadEntity.Exceptions.ObjectNotFoundException;
 import com.zamecki.Podcastly.FileUploadEntity.Model.PodcastFile;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
@@ -32,7 +32,7 @@ public class GridsFSRepository {
         query.addCriteria(Criteria.where("_id").is(file_id));
         GridFSFile dbFile=gridFsTemplate.findOne(query);
         if(dbFile==null) {
-            throw new CustomRuntimeException("File not found!");
+            throw new ObjectNotFoundException("File not found!");
         }else{
             //TODO: Zrobić weryfikację czy są metadane, jak nie to wpisywać nulle
             return PodcastFile.builder().name( dbFile.getMetadata().get("filename").toString()).inputStream(gridFsTemplate.getResource(dbFile).getInputStream()).contentType(dbFile.getMetadata().get("_contentType").toString()).build();

@@ -27,7 +27,7 @@ public class MongoTemplateRepository {
     }
     public List<PostDataEntity> findAllByCategory(String category) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("category").is(category));
+        query.addCriteria(Criteria.where("category").regex(category,"i"));
         query.fields().include("id","title","created_at","category","tags");
         return mongoTemplate.find(query, PostDataEntity.class, "PostData");
     }
