@@ -23,7 +23,8 @@ function openPodcastPage() {
         const created_at = response.created_at
         //const modified_at = response.modified_at
         const tags = response.tags
-        //const file_id = response.file_id
+        const file_id = response.file_id
+
 
         // Przypisanie tagów do zmiennej string, separator to ','
         let sTags = ""
@@ -41,8 +42,38 @@ function openPodcastPage() {
         //document.getElementById("podcast-modified-at").innerHTML += modified_at;
         document.getElementById("podcast-tags").innerHTML += tags;
 
+
+        playPodcast(file_id)
     }
     xhr.send()
 }
+
+function playPodcast(file_id){
+
+    // Inicjalizacja odtwarzacza wideo jako zmiennej
+    const videoPlayer = document.getElementById('videoPlayer');
+
+    // Utworzenie nowego obiektu klasy XMLHttpRequest
+    const xhr = new XMLHttpRequest();
+    const url = "http://localhost:8080/rest/podcasts"
+
+    // Otwarcie połączenia z funkcją, która pobiera video jako plik typu blob
+    xhr.open('GET', url + '/stream/' + file_id, true)
+    xhr.responseType = 'blob'; // ustawienie oczekiwanego typu odpowiedzi
+
+    xhr.onload = () => {
+
+        // Przypisanie wyniku requesta do zmiennej
+        const videoBlob = xhr.response;
+
+        // Wrzucenie pliku blob do odtwarzacza
+        videoPlayer.src = URL.createObjectURL(videoBlob);
+
+        // Odpalenie odtwarzacza
+        videoPlayer.play();
+    }
+    xhr.send()
+}
+
 
 openPodcastPage();
