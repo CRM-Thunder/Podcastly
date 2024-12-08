@@ -1,3 +1,7 @@
+/*
+Wszystkie poniższe trzy funkcje i inne zmienne potrzebne są do poprawnego działania tagów.
+*/
+
 const tagInput = document.getElementById('tag-input');
 const tagsContainer = document.getElementById('tags-container');
 const form = document.getElementById('dashboard-add-form');
@@ -21,7 +25,7 @@ function removeTag(tagToRemove) {
 
 // Funkcja renderująca tagi
 function renderTags() {
-    tagsContainer.innerHTML = ''; // Wyczyść istniejące tagi
+    tagsContainer.innerHTML = '';
     tags.forEach(tag => {
         const tagElement = document.createElement('div');
         tagElement.className = 'tag';
@@ -37,6 +41,11 @@ tagInput.addEventListener('keydown', (e) => {
         addTag(tagInput.value.trim());
     }
 });
+
+/*
+Cały poniższy kod odpowiedzialny jest za nasłuchiwanie nacisnięcia przycisku dodawania podcastu
+i operacji związanych z dodwaniem podcastu do bazy danych.
+ */
 
 const fileInput = document.getElementById('file');
 
@@ -56,7 +65,7 @@ form.addEventListener('submit', (e) => {
     };
 
     const formData = new FormData();
-    formData.append('addPostRequestDTO', new Blob([JSON.stringify(addPostRequestDTO)], { type: 'application/json' })); // JSON jako Blob
+    formData.append('addPostRequestDTO', new Blob([JSON.stringify(addPostRequestDTO)], { type: 'application/json' }));
     formData.append('file', file);
 
     const xhr = new XMLHttpRequest();

@@ -1,22 +1,37 @@
 // Znajdź listę w HTML
 const itemList = document.getElementById('item-list');
 
+// Funkcja do usuwania podcastu
 function deleteItem(id) {
-    if (confirm('Czy na pewno chcesz usunąć ten element?')) {
-        fetch(`http://localhost:8080/rest/podcasts/delete/${id}`, { method: 'DELETE' })
-            .then(response => {
-                if (response.ok) {
-                    alert('Element usunięty!');
-                    fetchAndUpdateList();
-                } else {
-                    alert('Nie udało się usunąć elementu.');
-                }
-            })
-            .catch(error => console.error('Błąd:', error));
+    if (confirm('Czy na pewno chcesz usunąć ten podcast?')) {
+        const xhr = new XMLHttpRequest();
+        const url = `http://localhost:8080/rest/podcasts/deleteById?id={id}`;
+
+        // Otwieramy połączenie
+        xhr.open('DELETE', url, true);
+
+        // Obsługa odpowiedzi
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                alert('Podcast został usunięty!');
+                document.getElementById(`item-${id}`).remove(); // Usuwamy element z DOM
+            } else {
+                alert(`Nie udało się usunąć podcastu. Status: ${xhr.status}`);
+            }
+        };
+
+        // Obsługa błędów
+        xhr.onerror = function () {
+            console.error('Błąd podczas usuwania podcastu.');
+            alert('Wystąpił błąd połączenia z serwerem.');
+        };
+
+        // Wysyłamy żądanie
+        xhr.send();
     }
 }
 
-// Funkcja do pobierania danych i aktualizacji listy
+// Funkcja do pobierania danych podcastu i aktualizacji listy podcastów
 function fetchAndUpdateList() {
     const xhr = new XMLHttpRequest();
     const url = "http://localhost:8080/rest/podcasts"
@@ -24,17 +39,13 @@ function fetchAndUpdateList() {
 
     xhr.onload = function () {
         if (xhr.status === 200) {
-            const data = JSON.parse(xhr.responseText); // Pobierz dane z API
+            const data = JSON.parse(xhr.responseText);
 
-            // Wyczyść istniejącą zawartość listy
             itemList.innerHTML = '';
 
-            // Iteruj przez dane i twórz elementy listy
             data.forEach(item => {
-                // Stwórz element <li>
                 const listItem = document.createElement('li');
 
-                // Dodaj strukturę HTML do elementu <li>
                 listItem.innerHTML = `
                     <div class="left-block">
                         <h1>${item.title}</h1>
@@ -52,7 +63,6 @@ function fetchAndUpdateList() {
                     </div>
                 `;
 
-                // Dodaj element do listy
                 itemList.appendChild(listItem);
             });
         } else {
@@ -67,5 +77,4 @@ function fetchAndUpdateList() {
     xhr.send();
 }
 
-// Wywołaj funkcję po załadowaniu strony
 fetchAndUpdateList();

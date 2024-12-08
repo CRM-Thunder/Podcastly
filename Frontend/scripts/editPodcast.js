@@ -1,3 +1,7 @@
+/*
+Wszystkie poniższe trzy funkcje i inne zmienne potrzebne są do poprawnego działania tagów.
+*/
+
 const tagInput = document.getElementById('tag-input');
 const tagsContainer = document.getElementById('tags-container');
 const form = document.getElementById('dashboard-add-form');
@@ -38,10 +42,20 @@ tagInput.addEventListener('keydown', (e) => {
     }
 });
 
+
+/*
+Funkcja pobierająca id podcastu do edycji.
+*/
+
 function getPodcastIdFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('id'); // Pobiera wartość parametru "id"
 }
+
+
+/*
+Funckja odpowiedzialna za pobranie pliku MP4 powiązanego z podcastem o danym id.
+ */
 
 const podcastId = getPodcastIdFromUrl();
 
@@ -71,6 +85,10 @@ function fetchPodcastFile(id) {
     };
     xhr.send();
 }
+
+/*
+Funkcja odpowiedzialna za pobranie reszty danych podcastu.
+ */
 
 function fetchPodcastDetails(id) {
     const xhr = new XMLHttpRequest();
@@ -108,8 +126,11 @@ function fetchPodcastDetails(id) {
     xhr.send();
 }
 
-console.log(podcastId);
 fetchPodcastDetails(podcastId);
+
+/*
+Metoda odpowiedzialna za aktualizacje danych podcastu
+ */
 
 const fileInput = document.getElementById('file');
 
