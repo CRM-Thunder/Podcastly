@@ -1,4 +1,4 @@
-function listByTitle() {
+function listByTitle(message) {
 
     // Przypisanie do zmniennej frazy, którą użytkownik wpisuje do paska wyszykiwania
     const search_bar_text = document.getElementById("podcast-search-bar").value;
@@ -14,7 +14,7 @@ function listByTitle() {
     const url = "http://localhost:8080/rest/podcasts"
 
     // Otwarcie połączenia
-    xhr.open('GET', url + '/find/title/' + search_bar_text, true)
+    xhr.open('GET', url + '/findByTitle?title=' + search_bar_text, true)
 
     xhr.onload = () => {
         var response = JSON.parse(xhr.responseText);
@@ -23,7 +23,6 @@ function listByTitle() {
 
         iframe.onload = () => {
             try {
-
                 // Dostęp do iframe
                 const iframeDocument = iframe.contentDocument;
 
@@ -35,7 +34,7 @@ function listByTitle() {
                 const rowContainer = iframeDocument.querySelector('.content-row');
 
                 // Sprawdzenie odpowiedzi
-                if (response && Array.isArray(response)) {
+                if (xhr.status === 200) {
                     response.forEach(item => {
                         // Tworzenie elementu HTML
                         const contentColumn = iframeDocument.createElement('div');
@@ -52,7 +51,7 @@ function listByTitle() {
                         rowContainer.appendChild(contentColumn);
                     });
                 } else {
-                    console.error("Brak danych lub niepoprawna odpowiedź z serwera.");
+                    alert("Coś poszło nie tak! Kod błędu: " + xhr.status)
                 }
             } catch (error) {
                 console.error("Brak dostępu do zawartości iframe.", error);

@@ -9,41 +9,43 @@ function openPodcastPage() {
     const id = params.get('id')
 
     // Otwarcie połączenia z funkcją, która pobiera dane podcastu za pomocą ID
-    xhr.open('GET', url + '/find/' + id, true)
+    xhr.open('GET', url + '/findById?id=' + id, true)
 
     xhr.onload = () => {
 
-        // Przypisanie wyniku w formacie JSON do zmiennej
-        const response = JSON.parse(xhr.responseText);
+        if(xhr.status === 200){
+            // Przypisanie wyniku w formacie JSON do zmiennej
+            const response = JSON.parse(xhr.responseText);
 
-        // Przpisanie poszczególnych wartości do osobnych zmiennych
-        const title = response.title
-        const category = response.category
-        const description= response.description
-        const created_at = response.created_at
-        //const modified_at = response.modified_at
-        const tags = response.tags
-        const file_id = response.file_id
-
-
-        // Przypisanie tagów do zmiennej string, separator to ','
-        let sTags = ""
-
-        tags.forEach(tag => {
-            sTags += tag +","
-        })
-        sTags = sTags.slice(0, -1) // Usunięcie ostatniego przecinka
-
-        // Wstawienie zmeinnych do HTML
-        document.getElementById("podcast-title").innerHTML += title;
-        document.getElementById("podcast-category").innerHTML += category;
-        document.getElementById("podcast-description").innerHTML += description;
-        document.getElementById("podcast-created-at").innerHTML += created_at;
-        //document.getElementById("podcast-modified-at").innerHTML += modified_at;
-        document.getElementById("podcast-tags").innerHTML += tags;
+            // Przpisanie poszczególnych wartości do osobnych zmiennych
+            const title = response.title
+            const category = response.category
+            const description= response.description
+            const created_at = response.created_at
+            const tags = response.tags
+            const file_id = response.file_id
 
 
-        playPodcast(file_id)
+            // Przypisanie tagów do zmiennej string, separator to ','
+            let sTags = ""
+
+            tags.forEach(tag => {
+                sTags += tag +","
+            })
+            sTags = sTags.slice(0, -1) // Usunięcie ostatniego przecinka
+
+            // Wstawienie zmeinnych do HTML
+            document.getElementById("podcast-title").innerHTML += title;
+            document.getElementById("podcast-category").innerHTML += category;
+            document.getElementById("podcast-description").innerHTML += description;
+            document.getElementById("podcast-created-at").innerHTML += created_at;
+            document.getElementById("podcast-tags").innerHTML += tags;
+
+            playPodcast(file_id)
+        } else {
+            alert("Coś poszło nie tak! " + xhr.statusText)
+        }
+
     }
     xhr.send()
 }
@@ -58,19 +60,24 @@ function playPodcast(file_id){
     const url = "http://localhost:8080/rest/podcasts"
 
     // Otwarcie połączenia z funkcją, która pobiera video jako plik typu blob
-    xhr.open('GET', url + '/stream/' + file_id, true)
+    xhr.open('GET', url + '/stream?id=' + file_id, true)
     xhr.responseType = 'blob'; // ustawienie oczekiwanego typu odpowiedzi
 
     xhr.onload = () => {
 
-        // Przypisanie wyniku requesta do zmiennej
-        const videoBlob = xhr.response;
+        if(xhr.status === 200){
+            // Przypisanie wyniku requesta do zmiennej
+            const videoBlob = xhr.response;
 
-        // Wrzucenie pliku blob do odtwarzacza
-        videoPlayer.src = URL.createObjectURL(videoBlob);
+            // Wrzucenie pliku blob do odtwarzacza
+            videoPlayer.src = URL.createObjectURL(videoBlob);
 
-        // Odpalenie odtwarzacza
-        videoPlayer.play();
+            // Odpalenie odtwarzacza
+            videoPlayer.play();
+        } else {
+            alert("Coś poszło nie tak! Kod błędu: ", xhr.status)
+        }
+
     }
     xhr.send()
 }

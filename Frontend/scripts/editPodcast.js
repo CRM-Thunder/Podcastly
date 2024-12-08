@@ -60,7 +60,7 @@ Funckja odpowiedzialna za pobranie pliku MP4 powiązanego z podcastem o danym id
 const podcastId = getPodcastIdFromUrl();
 
 function fetchPodcastFile(id) {
-    const url = `http://localhost:8080/rest/podcasts/stream/${id}`; // Endpoint backendu
+    const url = `http://localhost:8080/rest/podcasts/stream?id=${id}`; // Endpoint backendu
 
     const xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
@@ -92,7 +92,7 @@ Funkcja odpowiedzialna za pobranie reszty danych podcastu.
 
 function fetchPodcastDetails(id) {
     const xhr = new XMLHttpRequest();
-    const url = `http://localhost:8080/rest/podcasts/find/${id}`; // Endpoint backendu
+    const url = `http://localhost:8080/rest/podcasts/findById?id=${id}`; // Endpoint backendu
 
     xhr.open('GET', url, true);
     xhr.setRequestHeader('Content-Type', 'application/json');

@@ -12,7 +12,7 @@ function listByCategory(category) {
     const url = "http://localhost:8080/rest/podcasts"
 
     // Otwarcie połączenia
-    xhr.open('GET', url + '/find/category/' + category, true)
+    xhr.open('GET', url + '/findByCat?category=' + category, true)
 
     xhr.onload = () => {
 
@@ -32,8 +32,8 @@ function listByCategory(category) {
                 // Pobranie kontenera wiersza
                 const rowContainer = iframeDocument.querySelector('.content-row');
 
-                // Jeśli jest jakiś podcast do wyświetlenia, to ... (to trzeba zmienić, bo nie działa)
-                if (response && Array.isArray(response)) {
+
+                if (xhr.status === 200) {
 
                     // Pętla for each iterująca po wszystkich wynikach z JSONa
                     response.forEach(item => {
@@ -54,7 +54,7 @@ function listByCategory(category) {
                     })
 
                 } else {
-                    console.error("Brak podcastów do wyświetlenia.");
+                    alert("Coś poszło nie tak! Kod błędu: ", xhr.status)
                 }
             } catch (error) {
                 console.error("Brak dostępu do zawartości iframe.", error);
